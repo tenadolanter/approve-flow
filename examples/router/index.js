@@ -16,21 +16,6 @@ const routes = [
         name: "page-start",
         component: () => import("../views/start.md"),
       },
-      {
-        path: "/page-editor",
-        name: "page-editor",
-        component: () => import("../views/editor.md"),
-      },
-      {
-        path: "/page-builder",
-        name: "page-builder",
-        component: () => import("../views/builder.md"),
-      },
-      {
-        path: "/page-button",
-        name: "page-button",
-        component: () => import("../views/button.md"),
-      },
     ],
   }
 ]

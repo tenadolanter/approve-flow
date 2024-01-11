@@ -7,12 +7,10 @@ import demoBlock from "./components/demo-block.vue";
 import hljs from 'highlight.js';
 import './assets/styles/common.css';
 import './assets/styles/highlight.css';
-import E2ePageBuilder from "@src/coreui/index.js";
-import E2ePageEditor from "@src/editor/index.js";
+import ApproveFlow from "@src/index.js";
 Vue.component("demo-block", demoBlock);
 Vue.use(ElementUI);
-Vue.use(E2ePageBuilder);
-Vue.use(E2ePageEditor);
+Vue.use(ApproveFlow);
 
 router.afterEach(route => {
   Vue.nextTick(() => {
