@@ -1,0 +1,32 @@
+[
+  {
+    "id": "59907",
+    "unicode": "ea03",
+    "name": "action",
+    "fontClass": "tenado-action"
+  },
+  {
+    "id": "59905",
+    "unicode": "ea01",
+    "name": "add-fill",
+    "fontClass": "tenado-add-fill"
+  },
+  {
+    "id": "59906",
+    "unicode": "ea02",
+    "name": "close-fill",
+    "fontClass": "tenado-close-fill"
+  },
+  {
+    "id": "59908",
+    "unicode": "ea04",
+    "name": "condition",
+    "fontClass": "tenado-condition"
+  },
+  {
+    "id": "59909",
+    "unicode": "ea05",
+    "name": "info-fill",
+    "fontClass": "tenado-info-fill"
+  }
+]
