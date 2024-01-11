@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "allowJs": true,
+    "outDir": "./dist",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@example/*": ["example/*"],
+    }
+  },
+  "exclude": ["node_modules"],
+}

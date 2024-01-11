@@ -1,5 +1,5 @@
 {
-  "name": "@tenado/approve-flow",
+  "name": "pagebuilder",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tenadolanter/approve-flow.git"
+    "url": "git+https://github.com/tenadolanter/pagebuilder.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tenadolanter/approve-flow/issues"
+    "url": "https://github.com/tenadolanter/pagebuilder/issues"
   },
-  "homepage": "https://github.com/tenadolanter/approve-flow#readme",
+  "homepage": "https://github.com/tenadolanter/pagebuilder#readme",
+  "dependencies": {
+    "lodash-es": "^4.17.21",
+    "monaco-editor": "^0.44.0",
+    "uuid-v4": "^0.1.0"
+  },
   "devDependencies": {
     "@types/lodash-es": "^4.17.11",
     "@vitejs/plugin-vue2": "^2.2.0",

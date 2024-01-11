@@ -6,28 +6,6 @@
         <div class="side-nav">
           <el-menu :router="true">
             <el-menu-item index="/page-start"> 开始 </el-menu-item>
-            <el-menu-item-group>
-              <template slot="title"
-                >配置页面</template
-              >
-              <el-menu-item index="/page-editor">
-                e2e-page-editor
-              </el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
-              <template slot="title"
-                >渲染页面</template
-              >
-              <el-menu-item index="/page-builder">
-                e2e-page-builder
-              </el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
-              <template slot="title"
-                >常用组件</template
-              >
-              <el-menu-item index="/page-button"> button </el-menu-item>
-            </el-menu-item-group>
           </el-menu>
         </div>
       </el-scrollbar>
