@@ -1,4 +1,4 @@
-import VitePluginMd from "../build/vite-plugin-md/index.js";
+import VitePluginMd from "../plugins/vite-plugin-md/index.js";
 import Vue from "@vitejs/plugin-vue2";
 import commonjs from "vite-plugin-commonjs";
 import { resolve } from "path";
