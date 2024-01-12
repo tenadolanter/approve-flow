@@ -90,17 +90,11 @@ export default {
   position: relative;
 }
 .node-wrap-box {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
   display: inline-flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
   position: relative;
   width: 220px;
   min-height: 72px;
-  -ms-flex-negative: 0;
   flex-shrink: 0;
   background: #fff;
   border-radius: 4px;
@@ -216,7 +210,6 @@ export default {
   position: absolute;
   top: -12px;
   left: 50%;
-  -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
   width: 0;
   height: 4px;

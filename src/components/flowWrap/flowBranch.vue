@@ -194,7 +194,7 @@ export default {
   height: 30px;
   line-height: 30px;
   border-radius: 15px;
-  color: #3296fa;
+  color: #3c6dfc;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   position: absolute;
@@ -206,7 +206,6 @@ export default {
   z-index: 1;
   display: inline-flex;
   align-items: center;
-  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
@@ -221,10 +220,7 @@ export default {
 }
 .col-box {
   display: inline-flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
   flex-direction: column;
-  -webkit-box-align: center;
   align-items: center;
   position: relative;
 }
@@ -236,10 +232,7 @@ export default {
 .condition-node,
 .condition-node-box {
   display: inline-flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
   flex-direction: column;
-  -webkit-box-flex: 1;
 }
 .condition-node-box {
   padding-top: 30px;

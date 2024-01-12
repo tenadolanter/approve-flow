@@ -92,10 +92,7 @@ export default {
 .add-node-btn-box {
   width: 240px;
   display: inline-flex;
-  -ms-flex-negative: 0;
   flex-shrink: 0;
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
   position: relative;
 
   &:before {
@@ -123,7 +120,6 @@ export default {
 
     .btn {
       outline: none;
-      // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
       width: 24px;
       height: 24px;
       border-radius: 50%;
@@ -153,7 +149,6 @@ export default {
       &:hover {
         background: #3c6dfc;
         transform: scale(1.1);
-        // box-shadow: 0 13px 27px 0 rgba(0, 0, 0, 0.1);
         .circle {
           display: none;
         }
