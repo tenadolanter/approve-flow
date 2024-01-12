@@ -67,3 +67,4 @@
 | nodeType       | 节点的类型                     | String | start、route、condition、node |
 | childNode      | 子节点配置，是 NodeObject 对象 | Object | -                             |
 | conditionNodes | 子节点配置，NodeObject 数组    | Array  | -                             |
+| config         | 节点自定义配置                 | Object | -                             |
