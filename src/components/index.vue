@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flow-wrap">
     <FlowWrap :nodeConfig.sync="nodeConfig"></FlowWrap>
     <FlowEnd></FlowEnd>
   </div>
@@ -47,5 +47,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.flow-wrap {
+  background-color: #f5f5f7;
+  padding: 54.5px 0;
+  min-width: min-content;
+  transform: scale(1);
+}
 </style>

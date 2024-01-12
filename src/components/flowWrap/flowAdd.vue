@@ -23,7 +23,7 @@
           </a>
         </div>
         <button class="btn" type="button" slot="reference">
-          <span class="iconfont"></span>
+          <span class="iconfont">+</span>
         </button>
       </el-popover>
     </div>
