@@ -9,19 +9,19 @@
     >
       <div>
         <div class="title" :style="`background: rgb(${bgColor});`">
-          <span v-if="nodeConfig.nodeType == NODE_TYPES.START">{{ nodeConfig.nodeName }}</span>
+          <span v-if="nodeConfig.nodeType == NODE_TYPES.START">{{
+            nodeConfig.nodeName
+          }}</span>
           <template v-else>
-            <span class="editable-title">{{
-              nodeConfig.nodeName
-            }}</span>
+            <span class="editable-title">{{ nodeConfig.nodeName }}</span>
             <i class="close tenado-close-fill" @click="delNode"></i>
           </template>
         </div>
         <div class="content" @click="setPerson">
           <div class="text">
-            <span class="placeholder" v-if="!showText"
-              >请选择{{ defaultText }}</span
-            >
+            <span class="placeholder" v-if="!showText">
+              请选择{{ defaultText }}
+            </span>
             {{ showText }}
           </div>
           <i class="anticon anticon-right arrow"></i>
@@ -74,7 +74,7 @@ export default {
       this.$emit("on-config-change", this.nodeConfig.childNode);
     },
     setPerson() {
-      this.$emit('on-config-edit', this.nodeConfig);
+      this.$emit("on-config-edit", this.nodeConfig);
     },
   },
 };
