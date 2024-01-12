@@ -11,7 +11,6 @@
         <div class="title" :style="`background: rgb(${bgColor});`">
           <span v-if="nodeConfig.type == 0">{{ nodeConfig.nodeName }}</span>
           <template v-else>
-            <span class="iconfont">{{ nodeConfig.type == 1 ? "" : "" }}</span>
             <span class="editable-title">{{
               nodeConfig.nodeName
             }}</span>

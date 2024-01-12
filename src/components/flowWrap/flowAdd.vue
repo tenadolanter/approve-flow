@@ -1,22 +1,19 @@
 <template>
   <div class="add-node-btn-box">
     <div class="add-node-btn">
-      <el-popover placement="right-start" v-model="visible">
+      <el-popover placement="right-start" v-model="visible" popper-class="add-node-popover-body-wrap">
         <div class="add-node-popover-body">
-          <a class="add-node-popover-item approver" @click="addType(1)">
-            <div class="item-wrapper">
-              <span class="iconfont tenado-action"></span>
-            </div>
-            <p>动作</p>
-          </a>
-          <a class="add-node-popover-item condition" @click="addType(4)">
-            <div class="item-wrapper">
-              <span class="iconfont tenado-condition"></span>
-            </div>
-            <p>条件</p>
-          </a>
+          <div class="add-node-popover-item" @click="addType(1)">
+            <span class="iconfont tenado-action"></span>
+            <span class="text">动作</span>
+          </div>
+          <div class="add-node-popover-item" @click="addType(4)">
+            <span class="iconfont tenado-condition"></span>
+            <span class="text">条件</span>
+          </div>
         </div>
         <button class="btn" type="button" slot="reference">
+          <span class="circle"></span>
           <span class="iconfont tenado-add-fill"></span>
         </button>
       </el-popover>
@@ -94,8 +91,6 @@ export default {
 <style scoped lang="scss">
 .add-node-btn-box {
   width: 240px;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
   display: inline-flex;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -122,40 +117,54 @@ export default {
     width: 240px;
     padding: 20px 0 32px;
     display: flex;
-    -webkit-box-pack: center;
     justify-content: center;
     flex-shrink: 0;
-    -webkit-box-flex: 1;
     flex-grow: 1;
 
     .btn {
       outline: none;
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-      width: 30px;
-      height: 30px;
-      background: #3296fa;
+      // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       position: relative;
       border: none;
-      line-height: 30px;
-      -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      background-color: initial;
+      .circle {
+        display: block;
+        width: 8px;
+        height: 8px;
+        background: #3c6dfc;
+        border-radius: 50%;
+      }
       .iconfont {
+        display: none;
         color: #fff;
-        font-size: 16px;
+        font-size: 14px;
+        font-weight: 600;
       }
 
       &:hover {
-        transform: scale(1.3);
-        box-shadow: 0 13px 27px 0 rgba(0, 0, 0, 0.1);
+        background: #3c6dfc;
+        transform: scale(1.1);
+        // box-shadow: 0 13px 27px 0 rgba(0, 0, 0, 0.1);
+        .circle {
+          display: none;
+        }
+        .iconfont {
+          display: block;
+        }
       }
 
       &:active {
         transform: none;
-        background: #1e83e9;
+        background: #3c6dfc;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
       }
     }
@@ -163,69 +172,27 @@ export default {
 }
 </style>
 <style lang="scss">
-.add-node-popover-body {
-  display: flex;
-
-  .add-node-popover-item {
-    margin-right: 10px;
-    cursor: pointer;
-    text-align: center;
-    flex: 1;
-    color: #191f25 !important;
-
-    .item-wrapper {
+.add-node-popover-body-wrap {
+  padding: 0;
+  min-width: initial;
+  width: 120px;
+  .add-node-popover-body {
+    .add-node-popover-item {
+      display: flex;
+      align-items: center;
+      height: 36px;
+      padding: 0 12px;
+      border-radius: 4px;
       user-select: none;
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      margin-bottom: 5px;
-      background: #fff;
-      border: 1px solid #e2e2e2;
-      border-radius: 50%;
-      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-
+      cursor: pointer;
       .iconfont {
-        font-size: 1em;
+        margin-right: 8px;
       }
-    }
-
-    &.approver {
-      .item-wrapper {
-        color: #ff943e;
+      .text {
+        font-size: 14px;
       }
-    }
-
-    &.notifier {
-      .item-wrapper {
-        color: #3296fa;
-      }
-    }
-
-    &.condition {
-      .item-wrapper {
-        color: #15bc83;
-      }
-    }
-
-    &:hover {
-      .item-wrapper {
-        background: #3296fa;
-        box-shadow: 0 10px 20px 0 rgba(50, 150, 250, 0.4);
-      }
-
-      .iconfont {
-        color: #fff;
-      }
-    }
-
-    &:active {
-      .item-wrapper {
-        box-shadow: none;
-        background: #eaeaea;
-      }
-
-      .iconfont {
-        color: inherit;
+      &:hover {
+        background: #F5F6F7;
       }
     }
   }
