@@ -3,13 +3,13 @@
     <div
       class="node-wrap-box"
       :class="
-        (nodeConfig.type == 0 ? 'start-node ' : '') +
+        (nodeConfig.nodeType == NODE_TYPES.START ? 'start-node ' : '') +
           (isTried && nodeConfig.error ? 'active error' : '')
       "
     >
       <div>
         <div class="title" :style="`background: rgb(${bgColor});`">
-          <span v-if="nodeConfig.type == 0">{{ nodeConfig.nodeName }}</span>
+          <span v-if="nodeConfig.nodeType == NODE_TYPES.START">{{ nodeConfig.nodeName }}</span>
           <template v-else>
             <span class="editable-title">{{
               nodeConfig.nodeName
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { NODE_TYPES } from "../config.js";
 import AddNode from "./flowAdd.vue";
 export default {
   components: {
@@ -50,11 +51,11 @@ export default {
   computed: {
     bgColor() {
       return ["87, 106, 149", "255, 148, 62", "50, 150, 250"][
-        this.nodeConfig.type
+        this.nodeConfig.nodeType
       ];
     },
     defaultText() {
-      return this.placeholderList[this.nodeConfig.type];
+      return this.placeholderList[this.nodeConfig.nodeType];
     },
     showText() {
       return "所有人";
@@ -65,6 +66,7 @@ export default {
       placeholderList: ["发起人", "审核人", "抄送人"],
       isInput: false,
       isTried: false,
+      NODE_TYPES,
     };
   },
   methods: {

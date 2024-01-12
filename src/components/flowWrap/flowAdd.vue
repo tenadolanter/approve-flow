@@ -1,13 +1,17 @@
 <template>
   <div class="add-node-btn-box">
     <div class="add-node-btn">
-      <el-popover placement="right-start" v-model="visible" popper-class="add-node-popover-body-wrap">
+      <el-popover
+        placement="right-start"
+        v-model="visible"
+        popper-class="add-node-popover-body-wrap"
+      >
         <div class="add-node-popover-body">
-          <div class="add-node-popover-item" @click="addType(1)">
+          <div class="add-node-popover-item" @click="handlerAddNode">
             <span class="iconfont tenado-action"></span>
             <span class="text">动作</span>
           </div>
-          <div class="add-node-popover-item" @click="addType(4)">
+          <div class="add-node-popover-item" @click="handlerAddRouter">
             <span class="iconfont tenado-condition"></span>
             <span class="text">条件</span>
           </div>
@@ -21,6 +25,7 @@
   </div>
 </template>
 <script>
+import { NODE_TYPES } from "../config.js";
 export default {
   props: ["childNodeP"],
   data() {
@@ -29,61 +34,35 @@ export default {
     };
   },
   methods: {
-    addType(type) {
+    handlerAddRouter() {
       this.visible = false;
-      if (type != 4) {
-        var data;
-        if (type == 1) {
-          data = {
-            nodeName: "审核人",
-            error: true,
-            type: 1,
-            settype: 1,
-            selectMode: 0,
-            selectRange: 0,
-            directorLevel: 1,
-            examineMode: 1,
-            noHanderAction: 1,
-            examineEndDirectorLevel: 0,
+      const config = {
+        nodeName: "路由",
+        type: NODE_TYPES.ROUTE,
+        childNode: null,
+        conditionNodes: [
+          {
+            nodeName: "条件1",
+            type: NODE_TYPES.CONDITION,
             childNode: this.childNodeP,
-            nodeUserList: [],
-          };
-        } else if (type == 2) {
-          data = {
-            nodeName: "抄送人",
-            type: 2,
-            ccSelfSelectFlag: 1,
-            childNode: this.childNodeP,
-            nodeUserList: [],
-          };
-        }
-        this.$emit("update:childNodeP", data);
-      } else {
-        this.$emit("update:childNodeP", {
-          nodeName: "路由",
-          type: 4,
-          childNode: null,
-          conditionNodes: [
-            {
-              nodeName: "条件1",
-              error: true,
-              type: 3,
-              priorityLevel: 1,
-              conditionList: [],
-              nodeUserList: [],
-              childNode: this.childNodeP,
-            },
-            {
-              nodeName: "条件2",
-              type: 3,
-              priorityLevel: 2,
-              conditionList: [],
-              nodeUserList: [],
-              childNode: null,
-            },
-          ],
-        });
-      }
+          },
+          {
+            nodeName: "条件2",
+            type: NODE_TYPES.CONDITION,
+            childNode: null,
+          },
+        ],
+      };
+      this.$emit("update:childNodeP", config);
+    },
+    handlerAddNode() {
+      this.visible = false;
+      const config = {
+        nodeName: "审核人",
+        type: NODE_TYPES.NODE,
+        childNode: this.childNodeP,
+      };
+      this.$emit("update:childNodeP", config);
     },
   },
 };
@@ -187,7 +166,7 @@ export default {
         font-size: 14px;
       }
       &:hover {
-        background: #F5F6F7;
+        background: #f5f6f7;
         color: #3c6dfc;
       }
     }

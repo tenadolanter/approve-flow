@@ -1,13 +1,13 @@
 <template>
   <div>
     <FlowNode
-      v-if="nodeConfig.type < 3"
+      v-if="nodeConfig.nodeType !== NODE_TYPES.ROUTE"
       :nodeConfig="nodeConfig"
       @on-config-change="handlerConfigChange"
       @on-config-edit="handlerConfigEdit"
     ></FlowNode>
     <FlowBranch
-      v-if="nodeConfig.type == 4"
+      v-if="nodeConfig.nodeType == NODE_TYPES.ROUTE"
       :nodeConfig="nodeConfig"
       @on-config-change="handlerConfigChange"
       @on-config-edit="handlerConfigEdit"
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { NODE_TYPES } from "../config.js";
 export default {
   name: "FlowWrap",
   components: {
@@ -31,6 +32,11 @@ export default {
       type: Object,
       default: () => {},
     },
+  },
+  data(){
+    return {
+      NODE_TYPES,
+    }
   },
   methods: {
     handlerConfigChange(config) {

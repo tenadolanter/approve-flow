@@ -9,26 +9,38 @@
     data() {
       return {
         nodeConfig: {
+          nodeId: "",
           nodeName: "发起人",
-          type: 0,
+          nodeType: "start",
+          config: {},
           childNode: {
+            nodeId: "",
             nodeName: "审核人",
-            type: 1,
+            nodeType: "node",
+            config: {},
             childNode: {
+              nodeId: "",
               nodeName: "路由",
-              type: 4,
+              nodeType: "route",
+              config: {},
               conditionNodes: [
                 {
+                  nodeId: "",
                   nodeName: "条件1",
-                  type: 3,
+                  nodeType: "condition",
+                  config: {},
                   childNode: {
+                    nodeId: "",
                     nodeName: "审核人",
-                    type: 1,
+                    nodeType: "node",
+                    config: {},
                   },
                 },
                 {
+                  nodeId: "",
                   nodeName: "条件2",
-                  type: 3,
+                  nodeType: "condition",
+                  config: {},
                 },
               ],
             },

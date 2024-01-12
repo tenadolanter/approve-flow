@@ -100,7 +100,6 @@ export default {
     delTerm(index) {
       this.nodeConfig.conditionNodes.splice(index, 1);
       this.nodeConfig.conditionNodes.map((item, index) => {
-        item.priorityLevel = index + 1;
         item.nodeName = `条件${index + 1}`;
       });
       // this.resetConditionNodesErr();
