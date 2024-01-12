@@ -36,7 +36,7 @@ export default {
     handlerConfigChange(config) {
       this.$emit("update:nodeConfig", config);
     },
-    handlerConfigEdit(config, index){
+    handlerConfigEdit(config, index) {
       console.log("handlerConfigEdit", config, index);
     },
   },
