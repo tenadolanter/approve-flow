@@ -43,7 +43,7 @@
                     >优先级{{ item.priorityLevel }}</span
                   >
                   <i
-                    class="anticon anticon-close close"
+                    class="close tenado-close-fill"
                     @click="delTerm(index)"
                   ></i>
                 </div>

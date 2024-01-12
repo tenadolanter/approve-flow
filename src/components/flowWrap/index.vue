@@ -1,8 +1,13 @@
 <template>
   <div>
-    <FlowNode :nodeConfig="nodeConfig" v-if="nodeConfig.type < 3"></FlowNode>
+    <FlowNode
+      :nodeConfig="nodeConfig"
+      @on-config-change="handlerConfigChange"
+      v-if="nodeConfig.type < 3"
+    ></FlowNode>
     <FlowBranch
       :nodeConfig="nodeConfig"
+      @on-config-change="handlerConfigChange"
       v-if="nodeConfig.type == 4"
     ></FlowBranch>
     <FlowWrap
@@ -23,6 +28,11 @@ export default {
     nodeConfig: {
       type: Object,
       default: () => {},
+    },
+  },
+  methods: {
+    handlerConfigChange(config) {
+      this.$emit("update:nodeConfig", config);
     },
   },
 };

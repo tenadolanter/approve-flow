@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <font id="tenadoIcon" horiz-adv-x="1000">
+    <font-face font-family="tenadoIcon"
+      units-per-em="1000" ascent="1000"
+      descent="0" />
+    <missing-glyph horiz-adv-x="0" />
+    <glyph glyph-name="add-fill"
+      unicode="&#xEA01;"
+      horiz-adv-x="1000" d="M458.3330078125 541.6669921875V791.6669921875H541.6669921875V541.6669921875H791.6669921875001V458.3330078125H541.6669921875001V208.3330078124999H458.3330078125001V458.3330078124999H208.3330078125001V541.6669921874999z" />
+    <glyph glyph-name="close-fill"
+      unicode="&#xEA02;"
+      horiz-adv-x="1000" d="M500 558.916015625L706.25 765.166015625L765.166015625 706.25L558.9160156250001 500L765.166015625 293.75L706.25 234.833984375L500 441.0839843749999L293.75 234.833984375L234.833984375 293.75L441.083984375 500L234.833984375 706.25L293.75 765.166015625z" />
+  </font>
+</defs>
+</svg>

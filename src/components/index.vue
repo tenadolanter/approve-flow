@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import "../assets/font/index.min.css";
 export default {
   name: "ApproveFlow",
   components: {

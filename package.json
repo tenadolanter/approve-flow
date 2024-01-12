@@ -23,6 +23,7 @@
     "uuid-v4": "^0.1.0"
   },
   "devDependencies": {
+    "@tenado/svg2font": "^1.0.11",
     "@types/lodash-es": "^4.17.11",
     "@vitejs/plugin-vue2": "^2.2.0",
     "@vue/component-compiler-utils": "^2.6.0",

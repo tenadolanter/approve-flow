@@ -23,7 +23,7 @@
           </a>
         </div>
         <button class="btn" type="button" slot="reference">
-          <span class="iconfont">+</span>
+          <span class="iconfont tenado-add-fill"></span>
         </button>
       </el-popover>
     </div>
@@ -146,7 +146,9 @@ export default {
       line-height: 30px;
       -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-
+      display: flex;
+      align-items: center;
+      justify-content: center;
       .iconfont {
         color: #fff;
         font-size: 16px;

@@ -25,7 +25,7 @@
             <span v-else class="editable-title" @click="clickEvent()">{{
               nodeConfig.nodeName
             }}</span>
-            <i class="anticon anticon-close close" @click="delNode"></i>
+            <i class="close tenado-close-fill" @click="delNode"></i>
           </template>
         </div>
         <div class="content" @click="setPerson">
@@ -79,7 +79,9 @@ export default {
     };
   },
   methods: {
-    delNode() {},
+    delNode() {
+      this.$emit("on-config-change", this.nodeConfig.childNode);
+    },
     setPerson() {},
     blurEvent() {},
   },

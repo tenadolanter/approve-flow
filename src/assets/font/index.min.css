@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "tenadoIcon";
+  src: url("index.woff2?t=1705039327453") format("woff2"),
+    url("index.woff?t=1705039327453") format("woff"),
+    url("index.eot?t=1705039327453") format("embedded-opentype"),
+    url("index.ttf?t=1705039327453") format("truetype"),
+    url("index.svg?t=1705039327453") format("svg");
+}
+[class*=" tenado-"],
+[class^="tenado-"] {
+  font-family: "tenadoIcon" !important;
+  speak: none;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: baseline;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.tenado-add-fill:before {
+  content: "\0ea01";
+}
+.tenado-close-fill:before {
+  content: "\0ea02";
+}
