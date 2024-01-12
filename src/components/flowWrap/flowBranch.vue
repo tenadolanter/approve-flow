@@ -316,7 +316,7 @@ export default {
 }
 
 .auto-judge .title-wrapper .priority-title {
-  display: inline-block;
+  display: block;
   float: right;
   margin-right: 10px;
   color: rgba(25, 31, 37, 0.56);

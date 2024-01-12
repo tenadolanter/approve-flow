@@ -12,7 +12,7 @@ export default {
     FlowWrap: () => import("./flowWrap/index.vue"),
     FlowEnd: () => import("./flowWrap/flowEnd.vue"),
   },
-  data(){
+  data() {
     return {
       nodeConfig: {
         nodeName: "发起人",
@@ -30,20 +30,19 @@ export default {
                 childNode: {
                   nodeName: "审核人",
                   type: 1,
-                }
+                },
               },
               {
                 nodeName: "条件2",
                 type: 3,
               },
-            ]
+            ],
           },
-        }
+        },
       },
-    }
+    };
   },
-}
-
+};
 </script>
 
 <style scoped lang="scss">

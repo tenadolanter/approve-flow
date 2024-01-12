@@ -1,8 +1,14 @@
 <template>
   <div>
-    <FlowNode :nodeConfig="nodeConfig" v-if="nodeConfig.type<3"></FlowNode>
-    <FlowBranch :nodeConfig="nodeConfig" v-if="nodeConfig.type==4"></FlowBranch>
-    <FlowWrap v-if="nodeConfig.childNode" :nodeConfig.sync="nodeConfig.childNode"></FlowWrap>
+    <FlowNode :nodeConfig="nodeConfig" v-if="nodeConfig.type < 3"></FlowNode>
+    <FlowBranch
+      :nodeConfig="nodeConfig"
+      v-if="nodeConfig.type == 4"
+    ></FlowBranch>
+    <FlowWrap
+      v-if="nodeConfig.childNode"
+      :nodeConfig.sync="nodeConfig.childNode"
+    ></FlowWrap>
   </div>
 </template>
 
@@ -19,10 +25,7 @@ export default {
       default: () => {},
     },
   },
-}
-
+};
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
