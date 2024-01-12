@@ -12,17 +12,7 @@
           <span v-if="nodeConfig.type == 0">{{ nodeConfig.nodeName }}</span>
           <template v-else>
             <span class="iconfont">{{ nodeConfig.type == 1 ? "" : "" }}</span>
-            <input
-              type="text"
-              v-if="isInput"
-              class="ant-input editable-title-input"
-              @blur="blurEvent()"
-              @focus="$event.currentTarget.select()"
-              v-focus
-              v-model="nodeConfig.nodeName"
-              :placeholder="defaultText"
-            />
-            <span v-else class="editable-title" @click="clickEvent()">{{
+            <span class="editable-title">{{
               nodeConfig.nodeName
             }}</span>
             <i class="close tenado-close-fill" @click="delNode"></i>
@@ -83,7 +73,6 @@ export default {
       this.$emit("on-config-change", this.nodeConfig.childNode);
     },
     setPerson() {},
-    blurEvent() {},
   },
 };
 </script>

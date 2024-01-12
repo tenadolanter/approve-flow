@@ -14,47 +14,17 @@
                 class="auto-judge"
                 :class="isTried && item.error ? 'error active' : ''"
               >
-                <div
-                  class="sort-left"
-                  v-if="index != 0"
-                  @click="arrTransfer(index, -1)"
-                >
-                  &lt;
-                </div>
                 <div class="title-wrapper">
-                  <input
-                    v-if="isInputList[index]"
-                    type="text"
-                    class="ant-input editable-title-input"
-                    @blur="blurEvent(index)"
-                    @focus="$event.currentTarget.select()"
-                    v-focus
-                    v-model="item.nodeName"
-                  />
                   <span
-                    v-else
                     class="editable-title"
-                    @click="clickEvent(index)"
                     >{{ item.nodeName }}</span
-                  >
-                  <span
-                    class="priority-title"
-                    @click="setPerson(item.priorityLevel)"
-                    >优先级{{ item.priorityLevel }}</span
                   >
                   <i
                     class="close tenado-close-fill"
                     @click="delTerm(index)"
                   ></i>
                 </div>
-                <div
-                  class="sort-right"
-                  v-if="index != nodeConfig.conditionNodes.length - 1"
-                  @click="arrTransfer(index)"
-                >
-                  &gt;
-                </div>
-                <div class="content" @click="setPerson(item.priorityLevel)">
+                <div class="content" @click="setPerson(item)">
                   12121
                 </div>
                 <div class="error_tip" v-if="isTried && item.error">
@@ -109,17 +79,56 @@ export default {
   },
   data() {
     return {
-      isInputList: [],
       isTried: false,
       bgcolor: "#f5f5f7",
     };
   },
   methods: {
-    addTerm() {},
-    clickEvent() {},
-    setPerson() {},
-    delTerm() {},
-    arrTransfer() {},
+    addTerm() {
+      let len = this.nodeConfig.conditionNodes.length + 1
+      this.nodeConfig.conditionNodes.push({
+          "nodeName": "条件" + len,
+          "type": 3,
+          "childNode": null
+      });
+      // this.resetConditionNodesErr()
+      this.$emit("on-config-change", this.nodeConfig);
+    },
+    setPerson(item) {
+      
+    },
+    delTerm(index) {
+      this.nodeConfig.conditionNodes.splice(index, 1);
+      this.nodeConfig.conditionNodes.map((item, index) => {
+        item.priorityLevel = index + 1;
+        item.nodeName = `条件${index + 1}`;
+      });
+      // this.resetConditionNodesErr();
+      this.$emit("on-config-change", this.nodeConfig);
+      if (this.nodeConfig.conditionNodes.length == 1) {
+        if (this.nodeConfig.childNode) {
+          if (this.nodeConfig.conditionNodes[0].childNode) {
+            this.reData(
+              this.nodeConfig.conditionNodes[0].childNode,
+              this.nodeConfig.childNode
+            );
+          } else {
+            this.nodeConfig.conditionNodes[0].childNode = this.nodeConfig.childNode;
+          }
+        }
+        this.$emit(
+          "on-config-change",
+          this.nodeConfig.conditionNodes[0].childNode
+        );
+      }
+    },
+    reData(data, addData) {
+      if (!data.childNode) {
+        data.childNode = addData;
+      } else {
+        this.reData(data.childNode, addData);
+      }
+    },
   },
 };
 </script>
@@ -353,35 +362,6 @@ export default {
   -webkit-box-orient: vertical;
 }
 
-.auto-judge .sort-left,
-.auto-judge .sort-right {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  display: none;
-  z-index: 1;
-}
-
-.auto-judge .sort-left {
-  left: 0;
-  border-right: 1px solid #f6f6f6;
-}
-
-.auto-judge .sort-right {
-  right: 0;
-  border-left: 1px solid #f6f6f6;
-}
-
-.auto-judge:hover .sort-left,
-.auto-judge:hover .sort-right {
-  display: flex;
-  align-items: center;
-}
-
-.auto-judge .sort-left:hover,
-.auto-judge .sort-right:hover {
-  background: #efefef;
-}
 .top-left-cover-line {
   left: -1px;
 }
