@@ -72,7 +72,9 @@ export default {
     delNode() {
       this.$emit("on-config-change", this.nodeConfig.childNode);
     },
-    setPerson() {},
+    setPerson() {
+      this.$emit('on-config-edit', this.nodeConfig);
+    },
   },
 };
 </script>

@@ -24,7 +24,7 @@
                     @click="delTerm(index)"
                   ></i>
                 </div>
-                <div class="content" @click="setPerson(item)">
+                <div class="content" @click="setPerson(index)">
                   12121
                 </div>
                 <div class="error_tip" v-if="isTried && item.error">
@@ -94,8 +94,8 @@ export default {
       // this.resetConditionNodesErr()
       this.$emit("on-config-change", this.nodeConfig);
     },
-    setPerson(item) {
-      
+    setPerson(index) {
+      this.$emit('on-config-edit', this.nodeConfig, index);
     },
     delTerm(index) {
       this.nodeConfig.conditionNodes.splice(index, 1);
