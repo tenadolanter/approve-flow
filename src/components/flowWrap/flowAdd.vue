@@ -138,8 +138,8 @@ export default {
       background-color: initial;
       .circle {
         display: block;
-        width: 8px;
-        height: 8px;
+        width: 12px;
+        height: 12px;
         background: #3c6dfc;
         border-radius: 50%;
       }
@@ -193,6 +193,7 @@ export default {
       }
       &:hover {
         background: #F5F6F7;
+        color: #3c6dfc;
       }
     }
   }
