@@ -5,21 +5,15 @@
         <div class="add-node-popover-body">
           <a class="add-node-popover-item approver" @click="addType(1)">
             <div class="item-wrapper">
-              <span class="iconfont"></span>
+              <span class="iconfont tenado-action"></span>
             </div>
-            <p>审批人</p>
-          </a>
-          <a class="add-node-popover-item notifier" @click="addType(2)">
-            <div class="item-wrapper">
-              <span class="iconfont"></span>
-            </div>
-            <p>抄送人</p>
+            <p>动作</p>
           </a>
           <a class="add-node-popover-item condition" @click="addType(4)">
             <div class="item-wrapper">
-              <span class="iconfont"></span>
+              <span class="iconfont tenado-condition"></span>
             </div>
-            <p>条件分支</p>
+            <p>条件</p>
           </a>
         </div>
         <button class="btn" type="button" slot="reference">
@@ -182,8 +176,8 @@ export default {
     .item-wrapper {
       user-select: none;
       display: inline-block;
-      width: 80px;
-      height: 80px;
+      width: 40px;
+      height: 40px;
       margin-bottom: 5px;
       background: #fff;
       border: 1px solid #e2e2e2;
@@ -191,8 +185,7 @@ export default {
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
       .iconfont {
-        font-size: 35px;
-        line-height: 80px;
+        font-size: 1em;
       }
     }
 
