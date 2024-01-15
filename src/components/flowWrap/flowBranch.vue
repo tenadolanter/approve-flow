@@ -265,6 +265,7 @@ export default {
   border-radius: 4px;
   padding: 14px 19px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .auto-judge:after {

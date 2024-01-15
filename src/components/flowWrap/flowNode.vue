@@ -90,6 +90,7 @@ export default {
   width: 100%;
   padding: 0 50px;
   position: relative;
+  box-sizing: border-box;
 }
 .node-wrap-box {
   display: inline-flex;
@@ -150,6 +151,7 @@ export default {
   text-align: left;
   background: #576a95;
   border-radius: 4px 4px 0 0;
+  box-sizing: border-box;
 }
 
 .node-wrap-box .title .iconfont {

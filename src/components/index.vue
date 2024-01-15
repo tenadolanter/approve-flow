@@ -28,5 +28,6 @@ export default {
   padding: 54.5px 0;
   min-width: min-content;
   transform: scale(1);
+  box-sizing: border-box;
 }
 </style>

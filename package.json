@@ -8,8 +8,12 @@
     ".": {
       "require": "./lib/index.umd.js",
       "import": "./lib/index.mjs"
-    }
+    },
+    "./*": "./*"
   },
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "start:example": "VITE_CLI_TYPE=example vite",
     "build:example": "VITE_CLI_TYPE=example vite build",
