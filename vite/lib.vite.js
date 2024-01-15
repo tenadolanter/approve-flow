@@ -1,6 +1,5 @@
 
 import Vue from "@vitejs/plugin-vue2";
-import commonjs from "vite-plugin-commonjs";
 import { resolve } from "path";
 export default () => {
   return {
@@ -13,11 +12,15 @@ export default () => {
       outDir: "lib",
       rollupOptions: {
         external: ['vue'],
+        output: {
+          globals: {
+            vue: 'Vue'
+          },
+        },
       }
     },
     plugins: [
       Vue(),
-      commonjs(),
     ],
     resolve: {
       alias: {
