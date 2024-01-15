@@ -1,6 +1,6 @@
 <template>
   <div class="flow-wrap">
-    <FlowWrap :nodeConfig.sync="nodeConfig"></FlowWrap>
+    <FlowWrap :nodeConfig.sync="nodeConfig" v-on="$listeners"></FlowWrap>
     <FlowEnd></FlowEnd>
   </div>
 </template>

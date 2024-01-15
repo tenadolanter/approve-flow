@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <AddNode :childNodeP.sync="nodeConfig.childNode"></AddNode>
+    <AddNode :childNode.sync="nodeConfig.childNode" :nodeConfig="nodeConfig" v-on="$listeners"></AddNode>
   </div>
 </template>
 

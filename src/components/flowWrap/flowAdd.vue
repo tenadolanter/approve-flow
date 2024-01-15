@@ -28,7 +28,18 @@
 import uuid from "uuid-v4"
 import { NODE_TYPES } from "../config.js";
 export default {
-  props: ["childNodeP"],
+  props: {
+    // 当前节点的配置
+    nodeConfig: {
+      type: Object,
+      default: () => {},
+    },
+    // 当前节点的子节点
+    childNode: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       visible: false,
@@ -47,7 +58,7 @@ export default {
             nodeId: uuid(),
             nodeName: "条件1",
             nodeType: NODE_TYPES.CONDITION,
-            childNode: this.childNodeP,
+            childNode: this.childNode,
           },
           {
             nodeId: uuid(),
@@ -58,17 +69,18 @@ export default {
         ],
       };
       console.log("handlerAddRouter handlerAddRouter");
-      this.$emit("update:childNodeP", config);
+      this.$emit("update:childNode", config);
     },
     handlerAddNode() {
       this.visible = false;
-      const config = {
-        nodeId: uuid(),
-        nodeName: "审核人",
-        nodeType: NODE_TYPES.NODE,
-        childNode: this.childNodeP,
-      };
-      this.$emit("update:childNodeP", config);
+      // const config = {
+      //   nodeId: uuid(),
+      //   nodeName: "审核人",
+      //   nodeType: NODE_TYPES.NODE,
+      //   childNode: this.childNodeP,
+      // };
+      // this.$emit("update:childNodeP", config);
+      this.$emit('on-add', this.nodeConfig);
     },
   },
 };

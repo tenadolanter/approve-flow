@@ -2,7 +2,7 @@
 
 ```html
 <template>
-  <ApproveFlow :nodeConfig.sync="nodeConfig"></ApproveFlow>
+  <ApproveFlow :nodeConfig.sync="nodeConfig" @on-add="handlerAdd"></ApproveFlow>
 </template>
 <script>
   export default {
@@ -47,6 +47,11 @@
           },
         },
       };
+    },
+    methods: {
+      handlerAdd(nodeConfig){
+        console.log("handlerAdd", nodeConfig);
+      },
     },
   };
 </script>

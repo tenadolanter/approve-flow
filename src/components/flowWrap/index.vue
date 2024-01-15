@@ -5,16 +5,19 @@
       :nodeConfig="nodeConfig"
       @on-config-change="handlerConfigChange"
       @on-config-edit="handlerConfigEdit"
+      v-on="$listeners"
     ></FlowNode>
     <FlowBranch
       v-if="nodeConfig.nodeType == NODE_TYPES.ROUTE"
       :nodeConfig="nodeConfig"
       @on-config-change="handlerConfigChange"
       @on-config-edit="handlerConfigEdit"
+      v-on="$listeners"
     ></FlowBranch>
     <FlowWrap
       v-if="nodeConfig.childNode"
       :nodeConfig.sync="nodeConfig.childNode"
+      v-on="$listeners"
     ></FlowWrap>
   </div>
 </template>
