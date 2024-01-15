@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <AddNode :childNode.sync="nodeConfig.childNode" :nodeConfig="nodeConfig" v-on="$listeners"></AddNode>
+    <AddNode :childNodeP.sync="nodeConfig.childNode" :nodeConfig="nodeConfig" v-on="$listeners"></AddNode>
   </div>
 </template>
 
@@ -71,10 +71,10 @@ export default {
   },
   methods: {
     delNode() {
-      this.$emit("on-config-change", this.nodeConfig.childNode);
+      this.$emit("on-change", this.nodeConfig.childNode);
     },
     setPerson() {
-      this.$emit("on-config-edit", this.nodeConfig);
+      this.$emit("on-edit", this.nodeConfig);
     },
   },
 };

@@ -60,7 +60,7 @@
           </template>
         </div>
       </div>
-      <AddNode :childNode.sync="nodeConfig.childNode" :nodeConfig="nodeConfig" v-on="$listeners"></AddNode>
+      <AddNode :childNodeP.sync="nodeConfig.childNode" :nodeConfig="nodeConfig" v-on="$listeners"></AddNode>
     </div>
   </div>
 </template>
@@ -92,10 +92,10 @@ export default {
           "childNode": null
       });
       // this.resetConditionNodesErr()
-      this.$emit("on-config-change", this.nodeConfig);
+      this.$emit("on-change", this.nodeConfig);
     },
     setPerson(index) {
-      this.$emit('on-config-edit', this.nodeConfig, index);
+      this.$emit('on-edit', this.nodeConfig?.conditionNodes?.[index]);
     },
     delTerm(index) {
       this.nodeConfig.conditionNodes.splice(index, 1);
@@ -103,7 +103,7 @@ export default {
         item.nodeName = `条件${index + 1}`;
       });
       // this.resetConditionNodesErr();
-      this.$emit("on-config-change", this.nodeConfig);
+      this.$emit("on-change", this.nodeConfig);
       if (this.nodeConfig.conditionNodes.length == 1) {
         if (this.nodeConfig.childNode) {
           if (this.nodeConfig.conditionNodes[0].childNode) {
@@ -116,7 +116,7 @@ export default {
           }
         }
         this.$emit(
-          "on-config-change",
+          "on-change",
           this.nodeConfig.conditionNodes[0].childNode
         );
       }

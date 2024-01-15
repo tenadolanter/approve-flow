@@ -35,7 +35,7 @@ export default {
       default: () => {},
     },
     // 当前节点的子节点
-    childNode: {
+    childNodeP: {
       type: Object,
       default: () => {},
     },
@@ -58,7 +58,7 @@ export default {
             nodeId: uuid(),
             nodeName: "条件1",
             nodeType: NODE_TYPES.CONDITION,
-            childNode: this.childNode,
+            childNode: this.childNodeP,
           },
           {
             nodeId: uuid(),
@@ -68,8 +68,7 @@ export default {
           },
         ],
       };
-      console.log("handlerAddRouter handlerAddRouter");
-      this.$emit("update:childNode", config);
+      this.$emit("update:childNodeP", config);
     },
     handlerAddNode() {
       this.visible = false;
