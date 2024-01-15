@@ -11,8 +11,5 @@ const install = function(Vue){
 if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue);
 }
-
-export default {
-  install,
-  ApproveFlow,
-}
+ApproveFlow.install = install;
+export default ApproveFlow;
