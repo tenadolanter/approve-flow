@@ -15,10 +15,7 @@
                 :class="isTried && item.error ? 'error active' : ''"
               >
                 <div class="title-wrapper">
-                  <span
-                    class="editable-title"
-                    >{{ item.nodeName }}</span
-                  >
+                  <span class="editable-title">{{ item.nodeName }}</span>
                   <i
                     class="close tenado-close-fill"
                     @click="delTerm(index)"
@@ -60,12 +57,18 @@
           </template>
         </div>
       </div>
-      <AddNode :childNodeP.sync="nodeConfig.childNode" :nodeConfig="nodeConfig" v-on="$listeners"></AddNode>
+      <AddNode
+        :childNodeP.sync="nodeConfig.childNode"
+        :nodeConfig="nodeConfig"
+        v-on="$listeners"
+      ></AddNode>
     </div>
   </div>
 </template>
 
 <script>
+import uuid from "uuid-v4";
+import { NODE_TYPES } from "../config.js";
 export default {
   components: {
     AddNode: () => import("./flowAdd.vue"),
@@ -85,17 +88,17 @@ export default {
   },
   methods: {
     addTerm() {
-      let len = this.nodeConfig.conditionNodes.length + 1
+      let len = this.nodeConfig.conditionNodes.length + 1;
       this.nodeConfig.conditionNodes.push({
-          "nodeName": "条件" + len,
-          "type": 3,
-          "childNode": null
+        nodeId: uuid(),
+        nodeName: "条件" + len,
+        nodeType: NODE_TYPES.CONDITION,
+        childNode: null,
       });
-      // this.resetConditionNodesErr()
       this.$emit("on-change", this.nodeConfig);
     },
     setPerson(index) {
-      this.$emit('on-edit', this.nodeConfig?.conditionNodes?.[index]);
+      this.$emit("on-edit", this.nodeConfig?.conditionNodes?.[index]);
     },
     delTerm(index) {
       this.nodeConfig.conditionNodes.splice(index, 1);
@@ -115,10 +118,7 @@ export default {
             this.nodeConfig.conditionNodes[0].childNode = this.nodeConfig.childNode;
           }
         }
-        this.$emit(
-          "on-change",
-          this.nodeConfig.conditionNodes[0].childNode
-        );
+        this.$emit("on-change", this.nodeConfig.conditionNodes[0].childNode);
       }
     },
     reData(data, addData) {
