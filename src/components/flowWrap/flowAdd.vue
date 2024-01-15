@@ -25,6 +25,7 @@
   </div>
 </template>
 <script>
+import uuid from "uuid-v4"
 import { NODE_TYPES } from "../config.js";
 export default {
   props: ["childNodeP"],
@@ -37,29 +38,34 @@ export default {
     handlerAddRouter() {
       this.visible = false;
       const config = {
+        nodeId: uuid(),
         nodeName: "路由",
-        type: NODE_TYPES.ROUTE,
+        nodeType: NODE_TYPES.ROUTE,
         childNode: null,
         conditionNodes: [
           {
+            nodeId: uuid(),
             nodeName: "条件1",
-            type: NODE_TYPES.CONDITION,
+            nodeType: NODE_TYPES.CONDITION,
             childNode: this.childNodeP,
           },
           {
+            nodeId: uuid(),
             nodeName: "条件2",
-            type: NODE_TYPES.CONDITION,
+            nodeType: NODE_TYPES.CONDITION,
             childNode: null,
           },
         ],
       };
+      console.log("handlerAddRouter handlerAddRouter");
       this.$emit("update:childNodeP", config);
     },
     handlerAddNode() {
       this.visible = false;
       const config = {
+        nodeId: uuid(),
         nodeName: "审核人",
-        type: NODE_TYPES.NODE,
+        nodeType: NODE_TYPES.NODE,
         childNode: this.childNodeP,
       };
       this.$emit("update:childNodeP", config);
