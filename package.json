@@ -1,6 +1,6 @@
 {
   "name": "@tenado/approve-flow",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "",
   "main": "lib/index.umd.js",
   "module": "lib/index.mjs",
