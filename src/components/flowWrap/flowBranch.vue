@@ -28,12 +28,16 @@
                   <i class="anticon anticon-exclamation-circle"></i>
                 </div>
               </div>
-              <addNode :nodeConfig="nodeConfig.conditionNodes[index]" v-on="$listeners"></addNode>
+              <addNode
+                :nodeConfig="nodeConfig.conditionNodes[index]"
+                v-on="$listeners"
+              ></addNode>
             </div>
           </div>
           <nodeWrap
             v-if="item.childNode"
-            :nodeConfig.sync="item.childNode"
+            :nodeConfig="item.childNode"
+            v-on="$listeners"
           ></nodeWrap>
           <template v-if="index == 0">
             <div
@@ -57,10 +61,7 @@
           </template>
         </div>
       </div>
-      <AddNode
-        :nodeConfig="nodeConfig"
-        v-on="$listeners"
-      ></AddNode>
+      <AddNode :nodeConfig="nodeConfig" v-on="$listeners"></AddNode>
     </div>
   </div>
 </template>
@@ -100,25 +101,7 @@ export default {
       this.$emit("on-edit", this.nodeConfig?.conditionNodes?.[index]);
     },
     delTerm(index) {
-      this.nodeConfig.conditionNodes.splice(index, 1);
-      this.nodeConfig.conditionNodes.map((item, index) => {
-        item.nodeName = `条件${index + 1}`;
-      });
-      // this.resetConditionNodesErr();
-      this.$emit("on-change", this.nodeConfig);
-      if (this.nodeConfig.conditionNodes.length == 1) {
-        if (this.nodeConfig.childNode) {
-          if (this.nodeConfig.conditionNodes[0].childNode) {
-            this.reData(
-              this.nodeConfig.conditionNodes[0].childNode,
-              this.nodeConfig.childNode
-            );
-          } else {
-            this.nodeConfig.conditionNodes[0].childNode = this.nodeConfig.childNode;
-          }
-        }
-        this.$emit("on-change", this.nodeConfig.conditionNodes[0].childNode);
-      }
+      this.$emit('on-delete-condition', this.nodeConfig, index);
     },
     reData(data, addData) {
       if (!data.childNode) {

@@ -41,32 +41,11 @@ export default {
   methods: {
     handlerAddRouter() {
       this.visible = false;
-      // const config = {
-      //   nodeId: uuid(),
-      //   nodeName: "路由",
-      //   nodeType: NODE_TYPES.ROUTE,
-      //   childNode: null,
-      //   conditionNodes: [
-      //     {
-      //       nodeId: uuid(),
-      //       nodeName: "条件1",
-      //       nodeType: NODE_TYPES.CONDITION,
-      //       childNode: this.childNodeP,
-      //     },
-      //     {
-      //       nodeId: uuid(),
-      //       nodeName: "条件2",
-      //       nodeType: NODE_TYPES.CONDITION,
-      //       childNode: null,
-      //     },
-      //   ],
-      // };
-      // this.$emit("update:childNodeP", config);
-      this.$emit('on-router', this.nodeConfig)
+      this.$emit('on-add-router', this.nodeConfig)
     },
     handlerAddNode() {
       this.visible = false;
-      this.$emit('on-add', this.nodeConfig);
+      this.$emit('on-add-node', this.nodeConfig);
     },
   },
 };

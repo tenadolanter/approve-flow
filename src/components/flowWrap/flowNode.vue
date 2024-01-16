@@ -71,7 +71,8 @@ export default {
   },
   methods: {
     delNode() {
-      this.$emit("on-change", this.nodeConfig.childNode);
+      // this.$emit("on-change", this.nodeConfig.childNode);
+      this.$emit("on-delete-node", this.nodeConfig);
     },
     setPerson() {
       this.$emit("on-edit", this.nodeConfig);

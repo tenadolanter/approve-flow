@@ -2,9 +2,10 @@
   <div class="flow-wrap">
     <FlowWrap
       :nodeConfig="nodeConfig"
-      @on-add="handlerAddNode"
-      @on-router="handerRouterNode"
-      @on-delete="handlerDeleteNode"
+      @on-add-node="handlerAddNode"
+      @on-add-router="handerRouterNode"
+      @on-delete-node="handlerDeleteNode"
+      @on-delete-condition="handlerDeleteCondition"
       @on-edit="hanlderEditNode"
     ></FlowWrap>
     <FlowEnd></FlowEnd>
@@ -13,7 +14,7 @@
 
 <script>
 import "../assets/font/index.min.css";
-import { getAllNodes, getCurrentNode } from "./utils.js"
+import { getAllNodes, getCurrentNode, getParentNode } from "./utils.js"
 import { NODE_TYPES } from "./config.js"
 import { cloneDeep } from 'lodash-es';
 import uuid from "uuid-v4";
@@ -38,8 +39,8 @@ export default {
     },
     // 添加路由
     handerRouterNode(nodeConfig) {
-      const config = cloneDeep(this.nodeConfig);
-      const nodes = getAllNodes(config);
+      const allConfig = cloneDeep(this.nodeConfig);
+      const nodes = getAllNodes(allConfig);
       const nodeId = nodeConfig?.nodeId;
       const currentNode = getCurrentNode(nodes, nodeId);
       const originChildNode = nodeConfig?.childNode ?? null;
@@ -64,10 +65,54 @@ export default {
         ],
       }
       currentNode.childNode = newChildNode;
-      this.$emit("update:nodeConfig", config);
-      this.$emit("on-change", config);
+      this.$emit("update:nodeConfig", allConfig);
+      this.$emit("on-change", allConfig);
     },
-    handlerDeleteNode() {},
+    // 删除某个节点
+    handlerDeleteNode(nodeConfig) {
+      const allConfig = cloneDeep(this.nodeConfig);
+      const nodeId = nodeConfig?.nodeId;
+      const parentNode = getParentNode(allConfig, nodeId);
+      const originChildNode = nodeConfig?.childNode ?? null;
+      parentNode.childNode = originChildNode;
+      this.$emit("update:nodeConfig", allConfig);
+      this.$emit("on-change", allConfig);
+    },
+    // 删除某个条件节点
+    handlerDeleteCondition(nodeConfig, index){
+      const allConfig = cloneDeep(this.nodeConfig);
+      const nodes = getAllNodes(allConfig);
+      const nodeId = nodeConfig?.nodeId;
+      const currentNode = getCurrentNode(nodes, nodeId);
+      // 直接删除当前index的条件节点
+      currentNode.conditionNodes.splice(index, 1);
+      currentNode.conditionNodes.map((item, index) => {
+        item.nodeName = `条件${index + 1}`;
+      });
+      if (currentNode.conditionNodes.length == 1) {
+        if (currentNode.childNode) {
+          if (currentNode.conditionNodes[0].childNode) {
+            this.reData(
+              currentNode.conditionNodes[0].childNode,
+              currentNode.childNode
+            );
+          } else {
+            currentNode.conditionNodes[0].childNode = currentNode.childNode;
+          }
+        }
+        const parentNode = getParentNode(allConfig, nodeId);
+        parentNode.childNode = currentNode.conditionNodes[0].childNode;
+      }
+      this.$emit("update:nodeConfig", allConfig);
+      this.$emit("on-change", allConfig);
+    },
+    reData(data, addData) {
+      if (!data.childNode) {
+        data.childNode = addData;
+      } else {
+        this.reData(data.childNode, addData);
+      }
+    },
   },
 };
 </script>
