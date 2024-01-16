@@ -16,7 +16,7 @@
 import "../assets/font/index.min.css";
 import { getAllNodes, getCurrentNode, getParentNode } from "./utils.js"
 import { NODE_TYPES } from "./config.js"
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep } from 'lodash';
 import uuid from "uuid-v4";
 export default {
   name: "ApproveFlow",
