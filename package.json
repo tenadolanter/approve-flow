@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/tenadolanter/pagebuilder#readme",
   "dependencies": {
+    "lodash-es": "^4.17.21",
     "uuid-v4": "^0.1.0"
   },
   "devDependencies": {

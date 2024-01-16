@@ -28,7 +28,7 @@
                   <i class="anticon anticon-exclamation-circle"></i>
                 </div>
               </div>
-              <addNode :childNodeP.sync="item.childNode"></addNode>
+              <addNode :nodeConfig="nodeConfig.conditionNodes[index]" v-on="$listeners"></addNode>
             </div>
           </div>
           <nodeWrap
@@ -58,7 +58,6 @@
         </div>
       </div>
       <AddNode
-        :childNodeP.sync="nodeConfig.childNode"
         :nodeConfig="nodeConfig"
         v-on="$listeners"
       ></AddNode>

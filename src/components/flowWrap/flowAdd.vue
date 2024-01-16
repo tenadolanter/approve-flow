@@ -25,17 +25,10 @@
   </div>
 </template>
 <script>
-import uuid from "uuid-v4"
-import { NODE_TYPES } from "../config.js";
 export default {
   props: {
     // 当前节点的配置
     nodeConfig: {
-      type: Object,
-      default: () => {},
-    },
-    // 当前节点的子节点
-    childNodeP: {
       type: Object,
       default: () => {},
     },
@@ -48,37 +41,31 @@ export default {
   methods: {
     handlerAddRouter() {
       this.visible = false;
-      const config = {
-        nodeId: uuid(),
-        nodeName: "路由",
-        nodeType: NODE_TYPES.ROUTE,
-        childNode: null,
-        conditionNodes: [
-          {
-            nodeId: uuid(),
-            nodeName: "条件1",
-            nodeType: NODE_TYPES.CONDITION,
-            childNode: this.childNodeP,
-          },
-          {
-            nodeId: uuid(),
-            nodeName: "条件2",
-            nodeType: NODE_TYPES.CONDITION,
-            childNode: null,
-          },
-        ],
-      };
-      this.$emit("update:childNodeP", config);
+      // const config = {
+      //   nodeId: uuid(),
+      //   nodeName: "路由",
+      //   nodeType: NODE_TYPES.ROUTE,
+      //   childNode: null,
+      //   conditionNodes: [
+      //     {
+      //       nodeId: uuid(),
+      //       nodeName: "条件1",
+      //       nodeType: NODE_TYPES.CONDITION,
+      //       childNode: this.childNodeP,
+      //     },
+      //     {
+      //       nodeId: uuid(),
+      //       nodeName: "条件2",
+      //       nodeType: NODE_TYPES.CONDITION,
+      //       childNode: null,
+      //     },
+      //   ],
+      // };
+      // this.$emit("update:childNodeP", config);
+      this.$emit('on-router', this.nodeConfig)
     },
     handlerAddNode() {
       this.visible = false;
-      // const config = {
-      //   nodeId: uuid(),
-      //   nodeName: "审核人",
-      //   nodeType: NODE_TYPES.NODE,
-      //   childNode: this.childNodeP,
-      // };
-      // this.$emit("update:childNodeP", config);
       this.$emit('on-add', this.nodeConfig);
     },
   },

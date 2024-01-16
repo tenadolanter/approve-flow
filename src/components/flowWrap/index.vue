@@ -1,24 +1,19 @@
 <template>
-  <div>
+  <div class="flow-inner-wrap">
     <FlowNode
       v-if="nodeConfig.nodeType !== NODE_TYPES.ROUTE"
       :nodeConfig="nodeConfig"
-      @on-add="(...args) => $emit('on-add', ...args)"
-      @on-edit="(...args) => $emit('on-edit', ...args)"
-      @on-change="handlerConfigChange"
+      v-on="$listeners"
     ></FlowNode>
     <FlowBranch
       v-if="nodeConfig.nodeType == NODE_TYPES.ROUTE"
       :nodeConfig="nodeConfig"
-      @on-add="(...args) => $emit('on-add', ...args)"
-      @on-edit="(...args) => $emit('on-edit', ...args)"
-      @on-change="handlerConfigChange"
+      v-on="$listeners"
     ></FlowBranch>
     <FlowWrap
       v-if="nodeConfig.childNode"
-      :nodeConfig.sync="nodeConfig.childNode"
-      @on-add="(...args) => $emit('on-add', ...args)"
-      @on-edit="(...args) => $emit('on-edit', ...args)"
+      :nodeConfig="nodeConfig.childNode"
+      v-on="$listeners"
     ></FlowWrap>
   </div>
 </template>
@@ -37,15 +32,10 @@ export default {
       default: () => {},
     },
   },
-  data(){
+  data() {
     return {
       NODE_TYPES,
-    }
-  },
-  methods: {
-    handlerConfigChange(config) {
-      this.$emit("update:nodeConfig", config);
-    },
+    };
   },
 };
 </script>
