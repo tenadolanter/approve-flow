@@ -2,7 +2,7 @@
 
 ```html
 <template>
-  <ApproveFlow :nodeConfig.sync="nodeConfig" @on-add="handlerAdd" @on-edit="handlerEdit" @on-change="handlerChange"></ApproveFlow>
+  <ApproveFlow :nodeConfig.sync="nodeConfig" :isStartEmptyFn="isStartEmptyFn" @on-add="handlerAdd" @on-edit="handlerEdit" @on-change="handlerChange"></ApproveFlow>
 </template>
 <script>
 export default {
@@ -17,6 +17,9 @@ export default {
     };
   },
   methods: {
+    isStartEmptyFn(nodeConfig){
+      return nodeConfig?.nodeType === "start" && !nodeConfig?.code
+    },
     handlerAdd(nodeConfig){
       console.log("handlerAdd", nodeConfig);
       const nodeData = this.utilCloneDeep(this.nodeConfig);
@@ -27,15 +30,22 @@ export default {
       const _nodeConfig = {
         nodeId: nodeId,
         nodeName: nodeName,
-        nodeType: NODE_TYPES.NODE,
+        nodeType: "node",
         childNode: childNode,
         ...nodeConfig,
       };
       config.childNode = _nodeConfig;
-      
+      console.log("nodeData", nodeData);
     },
     handlerEdit(nodeConfig){
       console.log("handlerEdit", nodeConfig);
+      if(this.isStartEmptyFn(nodeConfig)) {
+        console.log('isStartEmptyFn', nodeConfig);
+        this.nodeConfig = {
+          ...nodeConfig,
+          code: 1121,
+        }
+      }
     },
     handlerChange(nodeConfig){
       console.log("handlerChange", nodeConfig);

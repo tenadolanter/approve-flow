@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="start-inner" v-else>
-        <i class="start-icon er-icon-add-circle-fill"></i>
+        <i class="start-icon tenado-add-fill"></i>
         <div class="desc">添加一个节点</div>
       </div>
       <div class="operate-delete" v-if="isDeleteShow && !readonly" @click.stop="handlerDeleteNode">

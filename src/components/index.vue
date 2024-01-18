@@ -21,6 +21,7 @@ import { cloneDeep } from "lodash";
 import uuid from "uuid-v4";
 import FlowWrap from "./flowWrap/index.vue";
 import FlowEnd from "./flowWrap/flowEnd.vue";
+import "../assets/font/index.min.css";
 export default {
   name: "ApproveFlow",
   components: {
@@ -40,6 +41,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isStartEmptyFn: {
+      type: Function,
+      default: () => {},
+    },
   },
   computed: {
     styles() {
@@ -48,7 +53,7 @@ export default {
       };
     },
     isStartNodeEmpty(){
-      return this.nodeConfig?.nodeType === NODE_TYPES.START && !this.nodeConfig?.code
+      return this.isStartEmptyFn(this.nodeConfig);
     },
   },
   methods: {
