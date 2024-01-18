@@ -5,61 +5,64 @@
   <ApproveFlow :nodeConfig.sync="nodeConfig" @on-add="handlerAdd" @on-edit="handlerEdit" @on-change="handlerChange"></ApproveFlow>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        nodeConfig: {
-          nodeId: "1",
-          nodeName: "发起人",
-          nodeType: "start",
-          config: {},
-          childNode: {
-            nodeId: "2",
-            nodeName: "审核人1",
-            nodeType: "node",
-            config: {},
-            childNode: {
-              nodeId: "3",
-              nodeName: "路由1",
-              nodeType: "route",
-              config: {},
-              conditionNodes: [
-                {
-                  nodeId: "4",
-                  nodeName: "条件1",
-                  nodeType: "condition",
-                  config: {},
-                  childNode: {
-                    nodeId: "5",
-                    nodeName: "审核人11",
-                    nodeType: "node",
-                    config: {},
-                  },
-                },
-                {
-                  nodeId: "6",
-                  nodeName: "条件2",
-                  nodeType: "condition",
-                  config: {},
-                },
-              ],
-            },
-          },
-        },
+export default {
+  data() {
+    return {
+      nodeConfig: {
+        nodeId: "1",
+        nodeName: "发起人",
+        nodeDesc: "发起人",
+        nodeType: "start",
+      },
+    };
+  },
+  methods: {
+    handlerAdd(nodeConfig){
+      console.log("handlerAdd", nodeConfig);
+      const nodeData = this.utilCloneDeep(this.nodeConfig);
+      const nodes = this.utilGetAllNodes(nodeData);
+      const config = this.utilGetNodeById(nodes, this.addNodeId);
+      const childNode = config?.childNode ?? null;
+      const { nodeId, nodeName } = nodeConfig ?? {};
+      const _nodeConfig = {
+        nodeId: nodeId,
+        nodeName: nodeName,
+        nodeType: NODE_TYPES.NODE,
+        childNode: childNode,
+        ...nodeConfig,
       };
+      config.childNode = _nodeConfig;
+      
     },
-    methods: {
-      handlerAdd(nodeConfig){
-        console.log("handlerAdd", nodeConfig);
-      },
-      handlerEdit(nodeConfig){
-        console.log("handlerEdit", nodeConfig);
-      },
-      handlerChange(nodeConfig){
-        console.log("handlerChange", nodeConfig);
-      },
+    handlerEdit(nodeConfig){
+      console.log("handlerEdit", nodeConfig);
     },
-  };
+    handlerChange(nodeConfig){
+      console.log("handlerChange", nodeConfig);
+    },
+    utilCloneDeep(data){
+      return JSON.parse(JSON.stringify(data))
+    },
+    utilGetAllNodes(nodeConfig){
+      let result = [];
+      result.push(nodeConfig);
+      if (nodeConfig?.childNode) {
+        const childs = this.getAllNodes(nodeConfig?.childNode);
+        result.push(...childs);
+      }
+      if (nodeConfig?.conditionNodes && nodeConfig?.conditionNodes?.length) {
+        nodeConfig?.conditionNodes.forEach(item => {
+          const childs = this.getAllNodes(item);
+          result.push(...childs);
+        });
+      }
+      return result;
+    },
+    utilGetNodeById(nodes, nodeId){
+      return nodes?.find(item => item.nodeId === nodeId) ?? {};
+    },
+  },
+};
 </script>
 ```
 

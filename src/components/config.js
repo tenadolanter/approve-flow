@@ -8,3 +8,7 @@ export const NODE_TYPES = {
   // 节点
   NODE: "node",
 }
+
+export const DEFAULT_OPTIONS = {
+  backgroud: '#f5f5f7',
+}

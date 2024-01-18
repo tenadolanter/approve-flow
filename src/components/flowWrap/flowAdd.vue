@@ -1,24 +1,20 @@
 <template>
   <div class="add-node-btn-box">
     <div class="add-node-btn">
-      <el-popover
-        placement="right-start"
-        v-model="visible"
-        popper-class="add-node-popover-body-wrap"
-      >
+      <el-popover placement="right-start" v-model="visible" :disabled="readonly" popper-class="add-node-popover-body-wrap">
         <div class="add-node-popover-body">
           <div class="add-node-popover-item" @click="handlerAddNode">
-            <span class="iconfont tenado-action"></span>
+            <span class="iconfont er-icon-Enable-line"></span>
             <span class="text">动作</span>
           </div>
           <div class="add-node-popover-item" @click="handlerAddRouter">
-            <span class="iconfont tenado-condition"></span>
+            <span class="iconfont er-icon-share-fill"></span>
             <span class="text">条件</span>
           </div>
         </div>
-        <button class="btn" type="button" slot="reference">
+        <button class="btn" :class="{ 'disabled': readonly }" type="button" slot="reference">
           <span class="circle"></span>
-          <span class="iconfont tenado-add-fill"></span>
+          <span class="iconfont er-icon-add-line"></span>
         </button>
       </el-popover>
     </div>
@@ -32,6 +28,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -40,12 +40,14 @@ export default {
   },
   methods: {
     handlerAddRouter() {
+      if(this.readonly) return;
       this.visible = false;
-      this.$emit('on-add-router', this.nodeConfig)
+      this.$emit("on-add-router", this.nodeConfig);
     },
     handlerAddNode() {
+      if(this.readonly) return;
       this.visible = false;
-      this.$emit('on-add-node', this.nodeConfig);
+      this.$emit("on-add-node", this.nodeConfig);
     },
   },
 };
@@ -94,6 +96,7 @@ export default {
       cursor: pointer;
       user-select: none;
       background-color: initial;
+      opacity: 0.8;
       .circle {
         display: block;
         width: 12px;
@@ -104,11 +107,11 @@ export default {
       .iconfont {
         display: none;
         color: #fff;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 600;
       }
 
-      &:hover {
+      &:not(.disabled):hover {
         background: #3c6dfc;
         transform: scale(1.1);
         .circle {
@@ -130,8 +133,8 @@ export default {
 </style>
 <style lang="scss">
 .add-node-popover-body-wrap {
-  padding: 0;
-  min-width: initial;
+  padding: 0 !important;
+  min-width: initial !important;
   width: 120px;
   .add-node-popover-body {
     .add-node-popover-item {

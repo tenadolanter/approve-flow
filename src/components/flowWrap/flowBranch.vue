@@ -2,66 +2,43 @@
   <div class="branch-wrap" ref="branchWrap">
     <div class="branch-box-wrap">
       <div class="branch-box">
-        <button class="add-branch" @click="addTerm">添加条件</button>
-        <div
-          class="col-box"
-          v-for="(item, index) in nodeConfig.conditionNodes"
-          :key="index"
-        >
+        <button class="add-branch" v-if="!readonly" @click="handlerAddNode">添加条件</button>
+        <div class="col-box" v-for="(item, index) in nodeConfig.conditionNodes" :key="index">
           <div class="condition-node">
             <div class="condition-node-box">
-              <div
-                class="auto-judge"
-                :class="isTried && item.error ? 'error active' : ''"
-              >
-                <div class="title-wrapper">
-                  <span class="editable-title">{{ item.nodeName }}</span>
-                  <i
-                    class="close tenado-close-fill"
-                    @click="delTerm(index)"
-                  ></i>
+              <div class="auto-judge" :class="{ error: item.error, disabled: readonly }" @click="handlerEditNode(index)">
+                <div class="node-inner">
+                  <div class="title">
+                    <i class="title-icon er-icon-filter-line"></i>
+                    <div class="text">{{ nodeConfig.conditionNodes[index].nodeName }}</div>
+                  </div>
+                  <div class="desc">
+                    {{ nodeConfig.conditionNodes[index].nodeDesc || "请设置条件" }}
+                  </div>
                 </div>
-                <div class="content" @click="setPerson(index)">
-                  12121
+                <div class="operate-delete" v-if="!readonly" @click.stop="handlerDeleteNode(index)">
+                  <div class="icon-wrap">
+                    <i class="er-icon-delete-bin-line"></i>
+                  </div>
                 </div>
-                <div class="error_tip" v-if="isTried && item.error">
-                  <i class="anticon anticon-exclamation-circle"></i>
-                </div>
+                <i class="error_tip er-icon-information-line" v-if="item.error"></i>
               </div>
-              <addNode
-                :nodeConfig="nodeConfig.conditionNodes[index]"
-                v-on="$listeners"
-              ></addNode>
+              <addNode :nodeConfig="nodeConfig.conditionNodes[index]" :readonly="readonly" v-on="$listeners"></addNode>
             </div>
           </div>
-          <nodeWrap
-            v-if="item.childNode"
-            :nodeConfig="item.childNode"
-            v-on="$listeners"
-          ></nodeWrap>
+          <nodeWrap v-if="item.childNode" :nodeConfig="item.childNode" v-on="$listeners"></nodeWrap>
+          <!-- 覆盖多余的线条 -->
           <template v-if="index == 0">
-            <div
-              class="top-left-cover-line"
-              :style="{ 'background-color': bgcolor }"
-            ></div>
-            <div
-              class="bottom-left-cover-line"
-              :style="{ 'background-color': bgcolor }"
-            ></div>
+            <div class="top-left-cover-line sup-line"></div>
+            <div class="bottom-left-cover-line sup-line"></div>
           </template>
           <template v-if="index == nodeConfig.conditionNodes.length - 1">
-            <div
-              class="top-right-cover-line"
-              :style="{ 'background-color': bgcolor }"
-            ></div>
-            <div
-              class="bottom-right-cover-line"
-              :style="{ 'background-color': bgcolor }"
-            ></div>
+            <div class="top-right-cover-line sup-line"></div>
+            <div class="bottom-right-cover-line sup-line"></div>
           </template>
         </div>
       </div>
-      <AddNode :nodeConfig="nodeConfig" v-on="$listeners"></AddNode>
+      <AddNode :nodeConfig="nodeConfig" :readonly="readonly" v-on="$listeners"></AddNode>
     </div>
   </div>
 </template>
@@ -69,9 +46,10 @@
 <script>
 import uuid from "uuid-v4";
 import { NODE_TYPES } from "../config.js";
+import AddNode from "./flowAdd.vue";
 export default {
   components: {
-    AddNode: () => import("./flowAdd.vue"),
+    AddNode,
     NodeWrap: () => import("./index.vue"),
   },
   props: {
@@ -79,36 +57,31 @@ export default {
       type: Object,
       default: () => {},
     },
-  },
-  data() {
-    return {
-      isTried: false,
-      bgcolor: "#f5f5f7",
-    };
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
-    addTerm() {
+    handlerAddNode() {
+      if (this.readonly) return;
       let len = this.nodeConfig.conditionNodes.length + 1;
       this.nodeConfig.conditionNodes.push({
         nodeId: uuid(),
         nodeName: "条件" + len,
+        nodeDesc: "",
         nodeType: NODE_TYPES.CONDITION,
         childNode: null,
       });
       this.$emit("on-change", this.nodeConfig);
     },
-    setPerson(index) {
+    handlerEditNode(index) {
+      if (this.readonly) return;
       this.$emit("on-edit", this.nodeConfig?.conditionNodes?.[index]);
     },
-    delTerm(index) {
-      this.$emit('on-delete-condition', this.nodeConfig, index);
-    },
-    reData(data, addData) {
-      if (!data.childNode) {
-        data.childNode = addData;
-      } else {
-        this.reData(data.childNode, addData);
-      }
+    handlerDeleteNode(index) {
+      if (this.readonly) return;
+      this.$emit("on-delete-condition", this.nodeConfig, index);
     },
   },
 };
@@ -122,18 +95,11 @@ export default {
 }
 .branch-box-wrap {
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   min-height: 270px;
   width: 100%;
-  -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 .branch-box {
@@ -144,11 +110,10 @@ export default {
   border-bottom: 2px solid #ccc;
   border-top: 2px solid #ccc;
   position: relative;
-  margin-top: 15px;
 }
 
 .branch-box .col-box {
-  background: #f5f5f7;
+  background: var(--backgroudOption);
 }
 
 .branch-box .col-box:before {
@@ -241,13 +206,18 @@ export default {
 }
 .auto-judge {
   position: relative;
-  width: 220px;
-  min-height: 72px;
+  width: 192px;
+  height: 80px;
   background: #fff;
   border-radius: 4px;
-  padding: 14px 19px;
   cursor: pointer;
   box-sizing: border-box;
+  &:hover {
+    .operate-delete {
+      display: flex;
+      opacity: 0.8;
+    }
+  }
 }
 
 .auto-judge:after {
@@ -265,17 +235,9 @@ export default {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
 }
 
-.auto-judge.active:after,
-.auto-judge:active:after,
-.auto-judge:hover:after {
-  border: 1px solid #3296fa;
+.auto-judge:hover:not(.disabled):after {
+  border: 1px solid rgba(60, 109, 252, 0.6);
   box-shadow: 0 0 6px 0 rgba(50, 150, 250, 0.3);
-}
-
-.auto-judge.active .close,
-.auto-judge:active .close,
-.auto-judge:hover .close {
-  display: block;
 }
 
 .auto-judge.error:after {
@@ -283,58 +245,8 @@ export default {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
 }
 
-.auto-judge .title-wrapper {
-  position: relative;
-  font-size: 12px;
-  color: #15bc83;
-  text-align: left;
-  line-height: 16px;
-}
-
-.auto-judge .title-wrapper .editable-title {
-  display: inline-block;
-  max-width: 120px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.auto-judge .title-wrapper .priority-title {
-  display: block;
-  float: right;
-  margin-right: 10px;
-  color: rgba(25, 31, 37, 0.56);
-}
-
-.auto-judge .placeholder {
-  color: #bfbfbf;
-}
-
-.auto-judge .close {
-  display: none;
-  position: absolute;
-  right: -10px;
-  top: -10px;
-  width: 20px;
-  height: 20px;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.25);
-  border-radius: 50%;
-  text-align: center;
-  line-height: 20px;
-  z-index: 2;
-}
-
-.auto-judge .content {
-  font-size: 14px;
-  color: #191f25;
-  text-align: left;
-  margin-top: 6px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+.sup-line {
+  background: var(--backgroudOption);
 }
 
 .top-left-cover-line {
@@ -367,5 +279,72 @@ export default {
 
 .bottom-right-cover-line {
   right: -1px;
+}
+
+.node-inner {
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  .title {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    .title-icon {
+      margin-right: 6px;
+      font-size: 13px;
+      color: #2b85fb;
+      font-weight: bold;
+      line-height: initial;
+    }
+    .text {
+      height: 24px;
+      max-width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      color: #323338;
+    }
+  }
+  .desc {
+    flex: 1 0 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 12px;
+    color: #676879;
+    display: flex;
+    align-items: center;
+  }
+}
+.operate-delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate(0, -100%);
+  padding: 6px 3px;
+  transition: opacity 0.5s;
+  opacity: 0;
+  .icon-wrap {
+    display: flex;
+    background: #3c6dfc;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+  }
+}
+.error_tip {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  transform: translate(120%, 0px);
+  font-size: 24px;
 }
 </style>

@@ -1,33 +1,54 @@
 <template>
-  <div class="flow-wrap">
+  <div class="flow-wrap" :style="styles">
     <FlowWrap
+      v-if="nodeConfig"
       :nodeConfig="nodeConfig"
+      :readonly="readonly"
       @on-add-node="handlerAddNode"
       @on-add-router="handerRouterNode"
       @on-delete-node="handlerDeleteNode"
       @on-delete-condition="handlerDeleteCondition"
       @on-edit="hanlderEditNode"
     ></FlowWrap>
-    <FlowEnd></FlowEnd>
+    <FlowEnd v-if="!isStartNodeEmpty"></FlowEnd>
   </div>
 </template>
 
 <script>
-import "../assets/font/index.min.css";
-import { getAllNodes, getCurrentNode, getParentNode } from "./utils.js"
-import { NODE_TYPES } from "./config.js"
-import { cloneDeep } from 'lodash';
+import { getAllNodes, getCurrentNode, getParentNode } from "./utils.js";
+import { NODE_TYPES, DEFAULT_OPTIONS } from "./config.js";
+import { cloneDeep } from "lodash";
 import uuid from "uuid-v4";
+import FlowWrap from "./flowWrap/index.vue";
+import FlowEnd from "./flowWrap/flowEnd.vue";
 export default {
   name: "ApproveFlow",
   components: {
-    FlowWrap: () => import("./flowWrap/index.vue"),
-    FlowEnd: () => import("./flowWrap/flowEnd.vue"),
+    FlowWrap,
+    FlowEnd,
   },
   props: {
     nodeConfig: {
       type: Object,
       default: () => {},
+    },
+    options: {
+      type: Object,
+      default: () => {},
+    },
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    styles() {
+      return {
+        '--backgroudOption': this.options?.backgroud || DEFAULT_OPTIONS.backgroud,
+      };
+    },
+    isStartNodeEmpty(){
+      return this.nodeConfig?.nodeType === NODE_TYPES.START && !this.nodeConfig?.code
     },
   },
   methods: {
@@ -47,39 +68,52 @@ export default {
       const newChildNode = {
         nodeId: uuid(),
         nodeName: "路由",
+        nodeDesc: "",
         nodeType: NODE_TYPES.ROUTE,
         childNode: null,
         conditionNodes: [
           {
             nodeId: uuid(),
             nodeName: "条件1",
+            nodeDesc: "",
             nodeType: NODE_TYPES.CONDITION,
             childNode: originChildNode,
           },
           {
             nodeId: uuid(),
             nodeName: "条件2",
+            nodeDesc: "",
             nodeType: NODE_TYPES.CONDITION,
             childNode: null,
           },
         ],
-      }
+      };
       currentNode.childNode = newChildNode;
       this.$emit("update:nodeConfig", allConfig);
       this.$emit("on-change", allConfig);
     },
     // 删除某个节点
     handlerDeleteNode(nodeConfig) {
-      const allConfig = cloneDeep(this.nodeConfig);
+      let allConfig = cloneDeep(this.nodeConfig);
       const nodeId = nodeConfig?.nodeId;
       const parentNode = getParentNode(allConfig, nodeId);
-      const originChildNode = nodeConfig?.childNode ?? null;
-      parentNode.childNode = originChildNode;
+      if (parentNode) {
+        const originChildNode = nodeConfig?.childNode ?? null;
+        parentNode.childNode = originChildNode;
+      } else {
+        const {  nodeId, nodeType } = allConfig;
+        allConfig = {
+          nodeId,
+          nodeType,
+          nodeDesc: "",
+          nodeName: "",
+        };
+      }
       this.$emit("update:nodeConfig", allConfig);
       this.$emit("on-change", allConfig);
     },
     // 删除某个条件节点
-    handlerDeleteCondition(nodeConfig, index){
+    handlerDeleteCondition(nodeConfig, index) {
       const allConfig = cloneDeep(this.nodeConfig);
       const nodes = getAllNodes(allConfig);
       const nodeId = nodeConfig?.nodeId;
@@ -92,10 +126,7 @@ export default {
       if (currentNode.conditionNodes.length == 1) {
         if (currentNode.childNode) {
           if (currentNode.conditionNodes[0].childNode) {
-            this.reData(
-              currentNode.conditionNodes[0].childNode,
-              currentNode.childNode
-            );
+            this.reData(currentNode.conditionNodes[0].childNode, currentNode.childNode);
           } else {
             currentNode.conditionNodes[0].childNode = currentNode.childNode;
           }
@@ -119,10 +150,11 @@ export default {
 
 <style scoped lang="scss">
 .flow-wrap {
-  background-color: #f5f5f7;
   padding: 54.5px 0;
+  min-height: 100%;
   min-width: min-content;
   transform: scale(1);
   box-sizing: border-box;
+  background: var(--backgroudOption);
 }
 </style>

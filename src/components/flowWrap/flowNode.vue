@@ -2,36 +2,35 @@
   <div class="node-wrap">
     <div
       class="node-wrap-box"
-      :class="
-        (nodeConfig.nodeType == NODE_TYPES.START ? 'start-node ' : '') +
-          (isTried && nodeConfig.error ? 'active error' : '')
-      "
+      :class="{
+        'start-node': nodeConfig.nodeType == NODE_TYPES.START,
+        error: nodeConfig.error,
+        'empty-start-node': isStartNodeEmpty,
+        disabled: readonly,
+      }"
+      @click="handlerEditNode"
     >
-      <div>
-        <div class="title" :style="`background: rgb(${bgColor});`">
-          <span v-if="nodeConfig.nodeType == NODE_TYPES.START">{{
-            nodeConfig.nodeName
-          }}</span>
-          <template v-else>
-            <span class="editable-title">{{ nodeConfig.nodeName }}</span>
-            <i class="close tenado-close-fill" @click="delNode"></i>
-          </template>
+      <div class="node-inner" v-if="!isStartNodeEmpty">
+        <div class="title">
+          <i class="title-icon" :class="nodeIcon" :style="{ color: iconColor }"></i>
+          <div class="text">{{ nodeConfig.nodeName }}</div>
         </div>
-        <div class="content" @click="setPerson">
-          <div class="text">
-            <span class="placeholder" v-if="!showText">
-              请选择{{ defaultText }}
-            </span>
-            {{ showText }}
-          </div>
-          <i class="anticon anticon-right arrow"></i>
-        </div>
-        <div class="error_tip" v-if="isTried && nodeConfig.error">
-          <i class="anticon anticon-exclamation-circle"></i>
+        <div class="desc">
+          {{ nodeDesc }}
         </div>
       </div>
+      <div class="start-inner" v-else>
+        <i class="start-icon er-icon-add-circle-fill"></i>
+        <div class="desc">添加一个节点</div>
+      </div>
+      <div class="operate-delete" v-if="isDeleteShow && !readonly" @click.stop="handlerDeleteNode">
+        <div class="icon-wrap">
+          <i class="er-icon-delete-bin-line"></i>
+        </div>
+      </div>
+      <i class="error_tip er-icon-information-line" v-if="nodeConfig.error"></i>
     </div>
-    <AddNode :nodeConfig="nodeConfig" v-on="$listeners"></AddNode>
+    <AddNode :nodeConfig="nodeConfig" :readonly="readonly" v-on="$listeners" v-if="!isStartNodeEmpty"></AddNode>
   </div>
 </template>
 
@@ -47,34 +46,43 @@ export default {
       type: Object,
       default: () => {},
     },
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
-    bgColor() {
-      return ["87, 106, 149", "255, 148, 62", "50, 150, 250"][
-        this.nodeConfig.nodeType
-      ];
+    isDeleteShow() {
+      return (
+        this.nodeConfig.nodeType !== NODE_TYPES.START ||
+        (this.nodeConfig.nodeType === NODE_TYPES.START && !this.nodeConfig.childNode && this.nodeConfig.code)
+      );
     },
-    defaultText() {
-      return this.placeholderList[this.nodeConfig.nodeType];
+    nodeIcon() {
+      return this.nodeConfig?.icon?.icon;
     },
-    showText() {
-      return "所有人";
+    iconColor() {
+      return this.nodeConfig?.icon?.color || "#2b85fb";
+    },
+    nodeDesc() {
+      return this.nodeConfig?.nodeDesc || "描述";
+    },
+    isStartNodeEmpty() {
+      return this.nodeConfig?.nodeType === NODE_TYPES.START && !this.nodeConfig?.code;
     },
   },
   data() {
     return {
-      placeholderList: ["发起人", "审核人", "抄送人"],
-      isInput: false,
-      isTried: false,
       NODE_TYPES,
     };
   },
   methods: {
-    delNode() {
-      // this.$emit("on-change", this.nodeConfig.childNode);
+    handlerDeleteNode() {
+      if (this.readonly) return;
       this.$emit("on-delete-node", this.nodeConfig);
     },
-    setPerson() {
+    handlerEditNode() {
+      if (this.readonly) return;
       this.$emit("on-edit", this.nodeConfig);
     },
   },
@@ -97,12 +105,18 @@ export default {
   display: inline-flex;
   flex-direction: column;
   position: relative;
-  width: 220px;
-  min-height: 72px;
+  width: 192px;
+  height: 80px;
   flex-shrink: 0;
   background: #fff;
   border-radius: 4px;
   cursor: pointer;
+  &:hover {
+    .operate-delete {
+      display: flex;
+      opacity: 0.8;
+    }
+  }
 }
 
 .node-wrap-box:after {
@@ -120,94 +134,14 @@ export default {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
 }
 
-.node-wrap-box.active:after,
-.node-wrap-box:active:after,
-.node-wrap-box:hover:after {
-  border: 1px solid #3296fa;
+.node-wrap-box:hover:not(.empty-start-node):not(.disabled):after {
+  border: 1px solid rgba(60, 109, 252, 0.6);
   box-shadow: 0 0 6px 0 rgba(50, 150, 250, 0.3);
-}
-
-.node-wrap-box.active .close,
-.node-wrap-box:active .close,
-.node-wrap-box:hover .close {
-  display: block;
 }
 
 .node-wrap-box.error:after {
   border: 1px solid #f25643;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
-}
-
-.node-wrap-box .title {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding-left: 16px;
-  padding-right: 30px;
-  width: 100%;
-  height: 24px;
-  line-height: 24px;
-  font-size: 12px;
-  color: #fff;
-  text-align: left;
-  background: #576a95;
-  border-radius: 4px 4px 0 0;
-  box-sizing: border-box;
-}
-
-.node-wrap-box .title .iconfont {
-  font-size: 12px;
-  margin-right: 5px;
-}
-
-.node-wrap-box .placeholder {
-  color: #bfbfbf;
-}
-
-.node-wrap-box .close {
-  display: none;
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  font-size: 14px;
-  color: #fff;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 20px;
-}
-
-.node-wrap-box .content {
-  position: relative;
-  font-size: 14px;
-  padding: 16px;
-  padding-right: 30px;
-}
-
-.node-wrap-box .content .text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-.node-wrap-box .content .arrow {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 14px;
-  font-size: 14px;
-  color: #979797;
-}
-
-.start-node.node-wrap-box .content .text {
-  display: block;
-  white-space: nowrap;
 }
 
 .node-wrap-box:before {
@@ -217,14 +151,117 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   width: 0;
-  height: 4px;
   border-style: solid;
   border-width: 8px 6px 4px;
   border-color: #cacaca transparent transparent;
-  background: #f5f5f7;
+  pointer-events: none;
+  background: var(--backgroudOption);
 }
 
 .node-wrap-box.start-node:before {
   content: none;
+}
+
+.node-inner {
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  .title {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    .title-icon {
+      margin-right: 6px;
+      font-size: 13px;
+      color: #2b85fb;
+      font-weight: bold;
+      line-height: initial;
+    }
+    .text {
+      height: 24px;
+      max-width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      color: #323338;
+    }
+  }
+  .desc {
+    flex: 1 0 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 12px;
+    color: #8f959e;
+    display: flex;
+    align-items: center;
+  }
+}
+.start-inner {
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #d0d4e4;
+  opacity: 0.8;
+  &:hover {
+    border-color: #3c6dfc;
+    background: #fff;
+    .start-icon {
+      color: #3c6dfc;
+    }
+    .desc {
+      color: #3c6dfc;
+    }
+  }
+  .start-icon {
+    font-size: 20px;
+    color: #d0d4e4;
+  }
+  .desc {
+    height: 28px;
+    line-height: 28px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 12px;
+    color: #8f959e;
+  }
+}
+.operate-delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate(0, -100%);
+  padding: 6px 3px;
+  transition: opacity 0.5s;
+  opacity: 0;
+  .icon-wrap {
+    display: flex;
+    background: #3c6dfc;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+  }
+}
+.error_tip {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  transform: translate(120%, 0px);
+  font-size: 24px;
+  color: #f25643;
 }
 </style>
