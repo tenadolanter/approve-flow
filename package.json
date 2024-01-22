@@ -27,9 +27,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tenadolanter/pagebuilder/issues"
+    "url": "https://github.com/tenadolanter/approve-flow/issues"
   },
-  "homepage": "https://github.com/tenadolanter/pagebuilder#readme",
+  "homepage": "https://github.com/tenadolanter/approve-flow#readme",
   "dependencies": {
     "lodash": "^4.17.21",
     "uuid-v4": "^0.1.0"

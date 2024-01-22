@@ -17,7 +17,9 @@ export default () => {
             vue: 'Vue'
           },
         },
-      }
+      },
+      // 库模式下不单独拆分css了
+      cssCodeSplit: false,
     },
     plugins: [
       Vue(),
