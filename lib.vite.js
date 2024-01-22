@@ -5,7 +5,7 @@ export default () => {
   return {
     build: {
       lib: {
-        entry: resolve(__dirname, '../src/index.js'),
+        entry: resolve(__dirname, 'src/index.js'),
         name: 'automateFlow',
         fileName: 'index',
       },

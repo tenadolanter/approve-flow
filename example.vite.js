@@ -1,4 +1,4 @@
-import VitePluginMd from "../build/vite-plugin-md/index.js";
+import VitePluginMd from "./build/vite-plugin-md/index.js";
 import Vue from "@vitejs/plugin-vue2";
 import commonjs from "vite-plugin-commonjs";
 import { resolve } from "path";
@@ -8,9 +8,10 @@ export default () => {
     build: {
       outDir: "dist",
       rollupOptions: {
-        input: resolve(__dirname, '../index.html'),
+        input: resolve(__dirname, 'index.html'),
         plugins: [commonjs()],
       },
+      target: "es2015",
     },
     plugins: [
       VitePluginMd(),
