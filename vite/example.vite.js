@@ -13,7 +13,7 @@ export default () => {
       },
     },
     plugins: [
-      VitePluginMd({ name: "1212" }),
+      VitePluginMd(),
       Vue({ include: [/(\.vue)$/, /\.md$/] }),
     ],
     resolve: {
@@ -21,10 +21,6 @@ export default () => {
         "@src": resolve("./src"),
         "@examples": resolve("./examples"),
       },
-    },
-    server: {
-      port: "8083",
-      proxy: {},
     },
   };
 };
