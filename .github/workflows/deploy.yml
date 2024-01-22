@@ -19,7 +19,7 @@ jobs:
         run: npm run svg2font
 
       - name: Build Docs
-        run: npm run docs:build
+        run: npm run build:example
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
