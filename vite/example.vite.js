@@ -4,6 +4,7 @@ import commonjs from "vite-plugin-commonjs";
 import { resolve } from "path";
 export default () => {
   return {
+    base: "./approve-flow",
     build: {
       outDir: "dist",
       rollupOptions: {
