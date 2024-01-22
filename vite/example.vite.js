@@ -5,8 +5,9 @@ import { resolve } from "path";
 export default () => {
   return {
     build: {
+      outDir: "dist",
       rollupOptions: {
-        input: "examples/main.js",
+        input: resolve(__dirname, '../index.html'),
         plugins: [commonjs()],
       },
     },
