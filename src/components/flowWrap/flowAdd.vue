@@ -4,17 +4,17 @@
       <el-popover placement="right-start" v-model="visible" :disabled="readonly" popper-class="add-node-popover-body-wrap">
         <div class="add-node-popover-body">
           <div class="add-node-popover-item" @click="handlerAddNode">
-            <span class="iconfont er-icon-Enable-line"></span>
+            <span class="iconfont tenado-action"></span>
             <span class="text">动作</span>
           </div>
           <div class="add-node-popover-item" @click="handlerAddRouter">
-            <span class="iconfont er-icon-share-fill"></span>
+            <span class="iconfont tenado-condition"></span>
             <span class="text">条件</span>
           </div>
         </div>
         <button class="btn" :class="{ 'disabled': readonly }" type="button" slot="reference">
           <span class="circle"></span>
-          <span class="iconfont er-icon-add-line"></span>
+          <span class="iconfont tenado-add-fill"></span>
         </button>
       </el-popover>
     </div>

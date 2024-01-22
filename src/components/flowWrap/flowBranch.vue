@@ -9,7 +9,7 @@
               <div class="auto-judge" :class="{ error: item.error, disabled: readonly }" @click="handlerEditNode(index)">
                 <div class="node-inner">
                   <div class="title">
-                    <i class="title-icon er-icon-filter-line"></i>
+                    <i class="title-icon tenado-condition"></i>
                     <div class="text">{{ nodeConfig.conditionNodes[index].nodeName }}</div>
                   </div>
                   <div class="desc">
@@ -18,10 +18,10 @@
                 </div>
                 <div class="operate-delete" v-if="!readonly" @click.stop="handlerDeleteNode(index)">
                   <div class="icon-wrap">
-                    <i class="er-icon-delete-bin-line"></i>
+                    <i class="tenado-close-fill"></i>
                   </div>
                 </div>
-                <i class="error_tip er-icon-information-line" v-if="item.error"></i>
+                <i class="error_tip tenado-info-fill" v-if="item.error"></i>
               </div>
               <addNode :nodeConfig="nodeConfig.conditionNodes[index]" :readonly="readonly" v-on="$listeners"></addNode>
             </div>

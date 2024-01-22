@@ -2,14 +2,21 @@
 
 ```html
 <template>
-  <ApproveFlow :nodeConfig.sync="nodeConfig" :isStartEmptyFn="isStartEmptyFn" @on-add="handlerAdd" @on-edit="handlerEdit" @on-change="handlerChange"></ApproveFlow>
+  <ApproveFlow
+    :nodeConfig.sync="nodeConfig"
+    :isStartEmptyFn="isStartEmptyFn"
+    @on-add="handlerAdd"
+    @on-edit="handlerEdit"
+    @on-change="handlerChange"
+  ></ApproveFlow>
 </template>
 <script>
 export default {
   data() {
     return {
+      uuid: 1,
       nodeConfig: {
-        nodeId: "1",
+        nodeId: 1,
         nodeName: "发起人",
         nodeDesc: "发起人",
         nodeType: "start",
@@ -17,59 +24,63 @@ export default {
     };
   },
   methods: {
-    isStartEmptyFn(nodeConfig){
-      return nodeConfig?.nodeType === "start" && !nodeConfig?.code
+    isStartEmptyFn(nodeConfig) {
+      return nodeConfig?.nodeType === "start" && !nodeConfig?.code;
     },
-    handlerAdd(nodeConfig){
-      console.log("handlerAdd", nodeConfig);
+    handlerAdd(nodeConfig) {
+      const addNodeId = nodeConfig?.nodeId;
       const nodeData = this.utilCloneDeep(this.nodeConfig);
       const nodes = this.utilGetAllNodes(nodeData);
-      const config = this.utilGetNodeById(nodes, this.addNodeId);
+      const config = this.utilGetNodeById(nodes, addNodeId);
       const childNode = config?.childNode ?? null;
-      const { nodeId, nodeName } = nodeConfig ?? {};
       const _nodeConfig = {
-        nodeId: nodeId,
-        nodeName: nodeName,
+        nodeId: this.utilGetUuid(),
+        nodeName: "新增了一个节点",
+        nodeDesc: "新增节点的描述",
         nodeType: "node",
         childNode: childNode,
-        ...nodeConfig,
       };
       config.childNode = _nodeConfig;
-      console.log("nodeData", nodeData);
+      this.nodeConfig = nodeData;
     },
-    handlerEdit(nodeConfig){
+    handlerEdit(nodeConfig) {
       console.log("handlerEdit", nodeConfig);
-      if(this.isStartEmptyFn(nodeConfig)) {
-        console.log('isStartEmptyFn', nodeConfig);
+      if (this.isStartEmptyFn(nodeConfig)) {
+        console.log("isStartEmptyFn", nodeConfig);
         this.nodeConfig = {
           ...nodeConfig,
+          nodeName: "添加的起始节点",
+          nodeDesc: "起始节点描述",
           code: 1121,
-        }
+        };
       }
     },
-    handlerChange(nodeConfig){
+    handlerChange(nodeConfig) {
       console.log("handlerChange", nodeConfig);
     },
-    utilCloneDeep(data){
-      return JSON.parse(JSON.stringify(data))
+    utilCloneDeep(data) {
+      return JSON.parse(JSON.stringify(data));
     },
-    utilGetAllNodes(nodeConfig){
+    utilGetAllNodes(nodeConfig) {
       let result = [];
       result.push(nodeConfig);
       if (nodeConfig?.childNode) {
-        const childs = this.getAllNodes(nodeConfig?.childNode);
+        const childs = this.utilGetAllNodes(nodeConfig?.childNode);
         result.push(...childs);
       }
       if (nodeConfig?.conditionNodes && nodeConfig?.conditionNodes?.length) {
-        nodeConfig?.conditionNodes.forEach(item => {
-          const childs = this.getAllNodes(item);
+        nodeConfig?.conditionNodes.forEach((item) => {
+          const childs = this.utilGetAllNodes(item);
           result.push(...childs);
         });
       }
       return result;
     },
-    utilGetNodeById(nodes, nodeId){
-      return nodes?.find(item => item.nodeId === nodeId) ?? {};
+    utilGetNodeById(nodes, nodeId) {
+      return nodes?.find((item) => item.nodeId === nodeId) ?? {};
+    },
+    utilGetUuid(){
+      return this.uuid++;
     },
   },
 };
@@ -103,4 +114,3 @@ export default {
 | nodeType       | 节点的类型                     | String | start、route、condition、node |
 | childNode      | 子节点配置，是 NodeObject 对象 | Object | -                             |
 | conditionNodes | 子节点配置，NodeObject 数组    | Array  | -                             |
-| config         | 节点自定义配置                 | Object | -                             |

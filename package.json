@@ -15,7 +15,8 @@
     "lib"
   ],
   "scripts": {
-    "start:example": "VITE_CLI_TYPE=example vite",
+    "start": "VITE_CLI_TYPE=example vite",
+    "svg2font": "npx svg2font sync",
     "build:example": "VITE_CLI_TYPE=example vite build",
     "build:lib": "VITE_CLI_TYPE=lib vite build"
   },

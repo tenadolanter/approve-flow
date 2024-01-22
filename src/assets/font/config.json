@@ -22,5 +22,11 @@
     "unicode": "ea04",
     "name": "condition",
     "fontClass": "tenado-condition"
+  },
+  {
+    "id": "59909",
+    "unicode": "ea05",
+    "name": "info-fill",
+    "fontClass": "tenado-info-fill"
   }
 ]

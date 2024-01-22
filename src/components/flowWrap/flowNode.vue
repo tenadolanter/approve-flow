@@ -25,10 +25,10 @@
       </div>
       <div class="operate-delete" v-if="isDeleteShow && !readonly" @click.stop="handlerDeleteNode">
         <div class="icon-wrap">
-          <i class="er-icon-delete-bin-line"></i>
+          <i class="tenado-close-fill"></i>
         </div>
       </div>
-      <i class="error_tip er-icon-information-line" v-if="nodeConfig.error"></i>
+      <i class="error_tip tenado-info-fill" v-if="nodeConfig.error"></i>
     </div>
     <AddNode :nodeConfig="nodeConfig" :readonly="readonly" v-on="$listeners" v-if="!isStartNodeEmpty"></AddNode>
   </div>

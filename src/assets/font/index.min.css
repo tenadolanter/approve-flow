@@ -1,10 +1,10 @@
 @font-face {
   font-family: "tenadoIcon";
-  src: url("index.woff2?t=1705044951075") format("woff2"),
-    url("index.woff?t=1705044951075") format("woff"),
-    url("index.eot?t=1705044951075") format("embedded-opentype"),
-    url("index.ttf?t=1705044951075") format("truetype"),
-    url("index.svg?t=1705044951075") format("svg");
+  src: url("index.woff2?t=1705914905766") format("woff2"),
+    url("index.woff?t=1705914905766") format("woff"),
+    url("index.eot?t=1705914905766") format("embedded-opentype"),
+    url("index.ttf?t=1705914905766") format("truetype"),
+    url("index.svg?t=1705914905766") format("svg");
 }
 [class*=" tenado-"],
 [class^="tenado-"] {
@@ -31,4 +31,7 @@
 }
 .tenado-condition:before {
   content: "\0ea04";
+}
+.tenado-info-fill:before {
+  content: "\0ea05";
 }
