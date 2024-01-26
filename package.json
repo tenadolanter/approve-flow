@@ -1,6 +1,6 @@
 {
   "name": "@tenado/approve-flow",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "流程配置组件",
   "main": "lib/index.umd.js",
   "module": "lib/index.mjs",
